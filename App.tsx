@@ -1,27 +1,28 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from './src/screens/HomeScreen';
-import DetailsScreen from './src/screens/DetailsScreen';
+
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MainScreen from './src/screens/MainScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
 import { RootStackParamList } from './src/types/navigation';
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Tab = createBottomTabNavigator<RootStackParamList>();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen 
-          name="Home" 
-          component={HomeScreen} 
+      <Tab.Navigator initialRouteName="Main">
+        <Tab.Screen 
+          name="Main" 
+          component={MainScreen} 
           options={{ title: '메인' }}
         />
-        <Stack.Screen 
-          name="Details" 
-          component={DetailsScreen} 
-          options={{ title: '상세 정보' }} 
+        <Tab.Screen 
+          name="Profile" 
+          component={ProfileScreen} 
+          options={{ title: '프로필' }} 
         />
-      </Stack.Navigator>
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
