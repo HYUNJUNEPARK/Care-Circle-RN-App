@@ -8,3 +8,6 @@ npm install @react-navigation/bottom-tabs
 
 
 npm install react-native-webview
+
+npm install @expo/vector-icons
+-> https://icons.expo.fyi/Index
