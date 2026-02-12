@@ -1,36 +1,22 @@
-import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import React, { useCallback, useEffect } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { WebView } from 'react-native-webview';
+import { BackHandler, Platform } from 'react-native';
 
 interface MainScreenProps {
   navigation: any;
 }
 
-const MainScreen: React.FC<MainScreenProps> = ({ navigation }) => {
+const MainScreen = ({ navigation }: MainScreenProps) => {
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Main Screen</Text>
-      <View style={styles.buttonContainer}>
-        <Button title="프로필로 이동" onPress={() => navigation.navigate('Profile')} />
-      </View>
-    </View>
+    <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
+      <WebView
+        source={{ uri: 'http://127.0.0.1:5173' }}
+        style={{ flex: 1 }}
+      />
+    </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 40,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    gap: 20,
-  },
-});
 
 export default MainScreen;

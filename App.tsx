@@ -6,21 +6,28 @@ import MainScreen from './src/screens/MainScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import { RootStackParamList } from './src/types/navigation';
 
+
 const Tab = createBottomTabNavigator<RootStackParamList>();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator initialRouteName="Main">
-        <Tab.Screen 
-          name="Main" 
-          component={MainScreen} 
-          options={{ title: '메인' }}
+      <Tab.Navigator initialRouteName="Home">
+        <Tab.Screen
+          name="Home"
+          component={MainScreen}
+          options={{
+            headerShown: false
+
+          }}
         />
-        <Tab.Screen 
-          name="Profile" 
-          component={ProfileScreen} 
-          options={{ title: '프로필' }} 
+        <Tab.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{
+            title: '프로필'
+
+          }}
         />
       </Tab.Navigator>
     </NavigationContainer>

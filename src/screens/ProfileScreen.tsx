@@ -5,7 +5,7 @@ interface ProfileScreenProps {
   navigation: any;
 }
 
-const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
+const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profile Screen</Text>

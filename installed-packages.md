@@ -5,3 +5,6 @@ npx expo install react-native-screens react-native-safe-area-context (-> X)
 npm install react-native-screens@~4.0.0 react-native-safe-area-context@4.12.0 (수동 버전 지정 설치)
 
 npm install @react-navigation/bottom-tabs
+
+
+npm install react-native-webview
