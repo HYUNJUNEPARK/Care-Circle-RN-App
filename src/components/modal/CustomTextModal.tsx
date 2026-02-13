@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, View, Text, TouchableOpacity, StyleSheet, Animated, Easing, Platform } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, StyleSheet, Animated, Easing } from 'react-native';
+import colors from '../../styles/colors';
 
 const ANIMATION_DURATION = 300; // ms
 
@@ -153,7 +154,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#e6e6e7',
     },
     confirmButton: {
-        backgroundColor: '#AABC99',
+        backgroundColor: colors.primary,
     },
     buttonText: {
         fontSize: 14,

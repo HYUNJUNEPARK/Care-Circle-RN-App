@@ -7,6 +7,7 @@ import ProfileScreen from './src/screens/profile/ProfileScreen';
 import { RootStackParamList } from './src/types/navigation';
 import Octicons from '@expo/vector-icons/Octicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import colors from './src/styles/colors';
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
 
@@ -17,7 +18,7 @@ export default function App() {
         <Tab.Navigator
           initialRouteName="Home"
           screenOptions={{
-            tabBarActiveTintColor:  '#AABC99', //'#5C9A87',// 활성 아이콘 색상
+            tabBarActiveTintColor:  colors.primary,
             tabBarInactiveTintColor: 'gray', // 비활성 아이콘 색상
           }}
         >
