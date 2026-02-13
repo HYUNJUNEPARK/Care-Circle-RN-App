@@ -6,7 +6,9 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "start:offline": "EXPO_OFFLINE=1 npx expo start --localhost -c",  
+    "reverse:5173": "adb reverse tcp:5173 tcp:5173"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
