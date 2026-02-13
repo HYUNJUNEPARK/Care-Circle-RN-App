@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { TextModalProvider } from './src/components/TextModalProvider';
+import { TextModalProvider } from './src/components/modal/TextModalProvider';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MainScreen from './src/screens/MainScreen';
+import HomeScreen from './src/screens/HomeScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import { RootStackParamList } from './src/types/navigation';
 import Octicons from '@expo/vector-icons/Octicons';
@@ -23,7 +23,7 @@ export default function App() {
         >
           <Tab.Screen
             name="Home"
-            component={MainScreen}
+            component={HomeScreen}
             options={{
               headerShown: false,
               tabBarIcon: ({ color, size }) => (
