@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { WebView, WebViewMessageEvent, WebViewNavigation } from 'react-native-webview';
 import { BackHandler } from 'react-native';
-import useTextModal from '../../components/modal/useTextModal';
+import useTextModal from '../../components/modals/useTextModal';
 import useBackHandler from '../../hooks/useBackHandler';
 
 interface HomeScreenProps {
@@ -43,7 +43,6 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
     canGoBack.current = navState.canGoBack;
   }
 
-
   /**
    * 웹뷰에서 메시지 수신 핸들러
    */
@@ -65,8 +64,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         ref={webViewRef}
         source={{ uri: 'http://127.0.0.1:5173' }}
         style={{ flex: 1 }}
-        //웹페이지를 이동할 때마다 onNavigationStateChange 호출
-        onNavigationStateChange={handleNavigationStateChange}
+        onNavigationStateChange={handleNavigationStateChange} //웹페이지를 이동할 때마다 onNavigationStateChange 호출
         onMessage={handleWebViewMessage}
       />
     </SafeAreaView>

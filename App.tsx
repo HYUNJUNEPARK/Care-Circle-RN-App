@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TextModalProvider } from './src/components/modal/TextModalProvider';
+import { TextModalProvider } from './src/components/modals/TextModalProvider';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from './src/screens/home/HomeScreen';

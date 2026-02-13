@@ -1,7 +1,7 @@
 
 import { View, Text, Button, StyleSheet, BackHandler, Platform, ScrollView } from 'react-native';
 import useBackHandler from '../../hooks/useBackHandler';
-import useTextModal from '../../components/modal/useTextModal';
+import useTextModal from '../../components/modals/useTextModal';
 import CustomButton from '../../components/buttons/CustomButton';
 
 interface ProfileScreenProps {
@@ -38,7 +38,6 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
   };
 
   return (
-
     <ScrollView showsVerticalScrollIndicator={false}>
       {/* 사용자 정보 카드 */}
       <View>
