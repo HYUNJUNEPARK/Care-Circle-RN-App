@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet, BackHandler, Platform, ScrollView } from 'react-native';
-import useBackHandler from './useBackHandler';
-import useTextModal from '../components/modal/useTextModal';
+import useBackHandler from '../../hooks/useBackHandler';
+import useTextModal from '../../components/modal/useTextModal';
 
 interface ProfileScreenProps {
   navigation: any;

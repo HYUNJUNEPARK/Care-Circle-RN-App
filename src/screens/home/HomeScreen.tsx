@@ -1,9 +1,9 @@
 import { useRef } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { WebView } from 'react-native-webview';
+import { WebView, WebViewMessageEvent, WebViewNavigation } from 'react-native-webview';
 import { BackHandler } from 'react-native';
-import useTextModal from '../components/modal/useTextModal';
-import useBackHandler from './useBackHandler';
+import useTextModal from '../../components/modal/useTextModal';
+import useBackHandler from '../../hooks/useBackHandler';
 
 interface HomeScreenProps {
   navigation: any;
@@ -36,6 +36,29 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
     }
   });
 
+  /**
+   * 웹뷰 내비게이션 상태 변경 핸들러
+   */
+  const handleNavigationStateChange = (navState: WebViewNavigation) => {
+    canGoBack.current = navState.canGoBack;
+  }
+
+
+  /**
+   * 웹뷰에서 메시지 수신 핸들러
+   */
+  const handleWebViewMessage = (event: WebViewMessageEvent) => {
+    try {
+      const data = JSON.parse(event.nativeEvent.data);
+      if (data.type === 'NAVIGATE_SIGN_IN') {
+        navigation.navigate('Profile')
+      }
+    } catch (e) {
+      // 메시지 파싱 실패 시 무시
+      console.error('Failed to parse message from WebView:', e);
+    }
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
       <WebView
@@ -43,9 +66,8 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         source={{ uri: 'http://127.0.0.1:5173' }}
         style={{ flex: 1 }}
         //웹페이지를 이동할 때마다 onNavigationStateChange 호출
-        onNavigationStateChange={navState =>
-          canGoBack.current = navState.canGoBack
-        }
+        onNavigationStateChange={handleNavigationStateChange}
+        onMessage={handleWebViewMessage}
       />
     </SafeAreaView>
   );
