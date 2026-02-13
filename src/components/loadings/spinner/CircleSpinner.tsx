@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { View, Animated, StyleSheet } from 'react-native';
 
-function LoadingSpinner() {
+function CircleSpinner() {
     const spinAnim = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
@@ -49,4 +49,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default LoadingSpinner;
+export default CircleSpinner;

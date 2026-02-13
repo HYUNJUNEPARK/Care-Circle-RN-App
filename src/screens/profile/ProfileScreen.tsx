@@ -1,7 +1,8 @@
-import React from 'react';
+
 import { View, Text, Button, StyleSheet, BackHandler, Platform, ScrollView } from 'react-native';
 import useBackHandler from '../../hooks/useBackHandler';
 import useTextModal from '../../components/modal/useTextModal';
+import CustomButton from '../../components/buttons/CustomButton';
 
 interface ProfileScreenProps {
   navigation: any;
@@ -41,6 +42,9 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
     <ScrollView showsVerticalScrollIndicator={false}>
       {/* 사용자 정보 카드 */}
       <View>
+        <Text>asdfsdafsad</Text>
+
+        <CustomButton loading={true}></CustomButton>
 
       </View>
     </ScrollView>

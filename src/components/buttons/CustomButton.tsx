@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { TouchableOpacity, View, Text, StyleSheet, GestureResponderEvent, ViewStyle, TextStyle } from 'react-native';
-import LoadingSpinner from '../loadings/spinner/LoadingSpinner';
+import CircleSpinner from '../loadings/spinner/CircleSpinner';
 import colors from '../../styles/colors';
 
 interface CustomButtonProps {
@@ -39,7 +39,7 @@ const CustomButton = ({
       {loading ? (
         <View style={styles.loadingContainer}>
           {/* RN ActivityIndicator 또는 커스텀 스피너 */}
-          <LoadingSpinner />
+          <CircleSpinner />
           {loadingText ? <Text style={[styles.loadingText, textStyle]}>{loadingText}</Text> : null}
         </View>
       ) : (
