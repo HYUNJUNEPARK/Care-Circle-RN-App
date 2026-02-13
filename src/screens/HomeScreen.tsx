@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { WebView } from 'react-native-webview';
-import { BackHandler, Platform } from 'react-native';
+import { BackHandler } from 'react-native';
 import useTextModal from '../components/modal/useTextModal';
 import useBackHandler from './useBackHandler';
 
