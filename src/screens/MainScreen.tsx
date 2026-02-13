@@ -13,27 +13,23 @@ const MainScreen = ({ navigation }: MainScreenProps) => {
   const canGoBack = useRef(false);
   const { showAlert } = useTextModal();
 
-  // 안드로이드에서 시스템 백버튼을 눌렀을 때 동작을 정의합니다.
   useEffect(() => {
     if (Platform.OS === 'android') {
-      // 백버튼 이벤트 핸들러
+
       const onBackPress = () => {
         // WebView가 뒤로 갈 수 있으면 goBack() 호출
         if (canGoBack.current && webViewRef.current) {
           webViewRef.current.goBack();
-          return true; // 기본 동작(앱 종료) 방지
+          return true;
         }
 
         if (!canGoBack.current) {
           showAlert({
-            title: '제목',
-            message: '메시지',
-            confirmText: '확인',
+            title: '앱을 종료하시겠습니까?',
+            message: '앱을 종료하려면 확인을 눌러주세요.',
             onConfirmAction: () => {
               BackHandler.exitApp();
-            },
-            cancelText: '취소',
-            onCancelAction: () => {},
+            }
           });
           return true;
         }
@@ -43,10 +39,7 @@ const MainScreen = ({ navigation }: MainScreenProps) => {
       };
       const backHandler = BackHandler.addEventListener('hardwareBackPress', onBackPress);
 
-      // 컴포넌트 언마운트 시 이벤트 제거
-      return () => {
-        backHandler.remove();
-      };
+      return () => backHandler.remove();
     }
   }, []);
 

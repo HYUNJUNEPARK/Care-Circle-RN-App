@@ -36,6 +36,7 @@ export default function App() {
             component={ProfileScreen}
             options={{
               title: '프로필',
+              headerTitleAlign: 'center',
               tabBarIcon: ({ color, size }) => (
                 <Octicons name="person" size={size} color={color} />
               ),
