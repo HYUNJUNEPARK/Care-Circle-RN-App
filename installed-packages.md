@@ -7,6 +7,9 @@ npm install react-native-screens@~4.0.0 react-native-safe-area-context@4.12.0 (�
 npm install @react-navigation/bottom-tabs
 npm install @react-navigation/stack
 npm install react-native-webview
+npm install react-native-dotenv //환경변수 관리
+
+npm install firebase
 
 npm install @expo/vector-icons
 -> https://icons.expo.fyi/Index
