@@ -4,6 +4,8 @@ import Input from '../../components/inputs/Input';
 import CustomButton from '../../components/buttons/CustomButton';
 import colors from '../../styles/colors';
 
+
+
 export default function SignUpScreen() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

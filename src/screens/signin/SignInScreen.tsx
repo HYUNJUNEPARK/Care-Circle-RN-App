@@ -168,7 +168,9 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
         >
           계정이 없으신가요?
         </Text>
-        <TouchableOpacity>
+        <TouchableOpacity
+            onPress={() => navigation.navigate('Profile')}
+        >
           <Text
             style={{
               fontSize: 14,
