@@ -7,8 +7,12 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "start:offline": "EXPO_OFFLINE=1 npx expo start --localhost -c",  
-    "reverse:5173": "adb reverse tcp:5173 tcp:5173"
+    "reverse:5173": "adb reverse tcp:5173 tcp:5173", 
+    "expo:start": "expo start --localhost -c",
+    "kill:mac": "kill -9 $(lsof -ti:8081) || true",
+    "kill:win": "for /f \"tokens=5\" %a in ('netstat -ano ^| findstr :8081') do taskkill /F /PID %a",
+    "start:mac": "npm run kill:mac && EXPO_OFFLINE=1 npm run expo:start",
+    "start:win": "npm run kill:win && set EXPO_OFFLINE=1&& npm run expo:start"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",

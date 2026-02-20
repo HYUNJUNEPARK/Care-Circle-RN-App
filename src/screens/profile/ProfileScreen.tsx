@@ -3,6 +3,7 @@ import { View, Text, Button, StyleSheet, BackHandler, Platform, ScrollView } fro
 import useBackHandler from '../../hooks/useBackHandler';
 import useTextModal from '../../components/modals/useTextModal';
 import CustomButton from '../../components/buttons/CustomButton';
+import Input from '../../components/inputs/Input';
 
 interface ProfileScreenProps {
   navigation: any;
@@ -42,6 +43,18 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
       {/* 사용자 정보 카드 */}
       <View>
         <Text>asdfsdafsad</Text>
+
+        <Input
+          inputType='password'
+          id="password"
+          label='비밀번호'
+          // label={"비밀번호"}
+          placeholder="••••••••"
+          value={''}
+          onChange={e => {}}
+          show={true}
+          setShow={undefined}
+        />
 
         <CustomButton loading={true}></CustomButton>
 
