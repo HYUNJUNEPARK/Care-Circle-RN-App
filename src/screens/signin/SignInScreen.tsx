@@ -169,7 +169,7 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
           계정이 없으신가요?
         </Text>
         <TouchableOpacity
-            onPress={() => navigation.navigate('Profile')}
+            onPress={() => navigation.navigate('SignUp')}
         >
           <Text
             style={{
