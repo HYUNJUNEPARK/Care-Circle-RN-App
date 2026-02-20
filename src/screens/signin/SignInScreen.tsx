@@ -3,8 +3,10 @@ import useTextModal from '../../components/modals/useTextModal';
 import CustomButton from '../../components/buttons/CustomButton';
 import Input from '../../components/inputs/Input';
 import colors from '../../styles/colors';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { appIcon, appText } from '../../assets';
+import useSignInByEmail from './useSignInByEmail';
+
 interface SignInScreenProps {
   navigation: any;
 }
@@ -17,7 +19,22 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberId, setRememberId] = useState(false);
-  
+
+  const { signInByEmail, isLoading, error } = useSignInByEmail();
+  const [loginSuccess, setLoginSuccess] = useState<boolean | null>(null);
+
+  const handleLogin = async () => {
+    setLoginSuccess(null);
+
+    await signInByEmail(email, password);
+  };
+
+
+  useEffect(() => {
+    if (!error) return;
+    setLoginSuccess(false);
+  }, [error]);
+
   return (
     <ScrollView
       contentContainerStyle={{
@@ -110,8 +127,17 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
           style={{
             marginTop: 18,
           }}
-          buttonText="로그인"
+          buttonText='로그인'
+          loading={isLoading}
+          onPress={handleLogin}
+
         />
+        {loginSuccess === true && (
+          <Text style={{ color: 'green', marginTop: 8 }}>로그인 성공!</Text>
+        )}
+        {loginSuccess === false && (
+          <Text style={{ color: 'red', marginTop: 8 }}>로그인 실패: {error?.message}</Text>
+        )}
       </View>
 
       <View>
@@ -169,7 +195,7 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
           계정이 없으신가요?
         </Text>
         <TouchableOpacity
-            onPress={() => navigation.navigate('SignUp')}
+          onPress={() => navigation.navigate('SignUp')}
         >
           <Text
             style={{

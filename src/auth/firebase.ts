@@ -22,5 +22,5 @@ try {
     app = initializeApp.getApps ? initializeApp.getApps()[0] : null;
 }
 
-export const firebaseApp = app;
+//export const firebaseApp = app;
 export const auth = getAuth(app);
