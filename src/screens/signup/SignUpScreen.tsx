@@ -1,10 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { View, Text, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Input from '../../components/inputs/Input';
 import CustomButton from '../../components/buttons/CustomButton';
 import colors from '../../styles/colors';
-
-
 
 export default function SignUpScreen() {
     const [email, setEmail] = useState('');
@@ -46,73 +45,29 @@ export default function SignUpScreen() {
     };
 
     return (
-        <ScrollView
-            contentContainerStyle={{
-                flexGrow: 1,
-                backgroundColor: '#fff',
-                padding: 24,
-                justifyContent: 'center',
-            }} 
-            keyboardShouldPersistTaps="handled"
-        >
-            <Text
-                style={{
-                    fontSize: 24,
-                    fontWeight: 'bold',
-                    textAlign: 'center',
-                    marginBottom: 32,
-                    color: '#222',
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+
+            <ScrollView
+                contentContainerStyle={{
+                    flexGrow: 1,
+                    backgroundColor: '#fff',
+                    padding: 12,
                 }}
+                keyboardShouldPersistTaps="handled" //입력창 외의 버튼 등을 눌러도 키보드가 바로 내려가지 않음
             >
-                회원가입
-            </Text>
-            <View
-                style={{
-                    marginBottom: 32,
-                }}
-            >
-                <Input
-                    inputType="plaintext"
-                    id="email"
-                    label="이메일"
-                    placeholder="your@email.com"
-                    value={email}
-                    onChange={setEmail}
-                />
-                <Text
+                <View
                     style={{
-                        fontSize: 12,
-                        minHeight: 22,
-                        marginLeft: 4,
-                        marginBottom: 12,
-                        marginTop: 4,
-                        textAlign: 'left',
-                        color: emailCheckResult.result ? colors.primary : '#e30d0d',
+                        marginBottom: 32,
                     }}
                 >
-                    {emailCheckResult.message}
-                </Text>
-                <Input
-                    id="password"
-                    inputType="password"
-                    label="비밀번호"
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={setPassword}
-                    show={showPassword}
-                    setShow={setShowPassword}
-                />
-                <Input
-                    id="passwordConfirm"
-                    inputType="password"
-                    label="비밀번호 확인"
-                    placeholder="••••••••"
-                    value={passwordConfirm}
-                    onChange={setPasswordConfirm}
-                    show={showPasswordConfirm}
-                    setShow={setShowPasswordConfirm}
-                />
-                {passwordMatchingStatus.show && (
+                    <Input
+                        inputType="plaintext"
+                        id="email"
+                        label="이메일"
+                        placeholder="your@email.com"
+                        value={email}
+                        onChange={setEmail}
+                    />
                     <Text
                         style={{
                             fontSize: 12,
@@ -121,25 +76,61 @@ export default function SignUpScreen() {
                             marginBottom: 12,
                             marginTop: 4,
                             textAlign: 'left',
-                            color: passwordMatchingStatus.result ? colors.primary : '#e30d0d',
+                            color: emailCheckResult.result ? colors.primary : '#e30d0d',
                         }}
                     >
-                        {passwordMatchingStatus.text}
+                        {emailCheckResult.message}
                     </Text>
-                )}
-            </View>
-            <View
-                style={{
-                    marginTop: 12,
-                }}
-            >
-                <CustomButton
-                    onPress={handleSignUp}
-                    loading={isLoading}
-                    buttonText="회원가입"
-                />
-            </View>
-        </ScrollView>
+                    <Input
+                        id="password"
+                        inputType="password"
+                        label="비밀번호"
+                        placeholder="••••••••"
+                        value={password}
+                        onChange={setPassword}
+                        show={showPassword}
+                        setShow={setShowPassword}
+                    />
+                    <Input
+                        id="passwordConfirm"
+                        inputType="password"
+                        label="비밀번호 확인"
+                        placeholder="••••••••"
+                        value={passwordConfirm}
+                        onChange={setPasswordConfirm}
+                        show={showPasswordConfirm}
+                        setShow={setShowPasswordConfirm}
+                    />
+                    {passwordMatchingStatus.show && (
+                        <Text
+                            style={{
+                                fontSize: 12,
+                                minHeight: 22,
+                                marginLeft: 4,
+                                marginBottom: 12,
+                                marginTop: 4,
+                                textAlign: 'left',
+                                color: passwordMatchingStatus.result ? colors.primary : '#e30d0d',
+                            }}
+                        >
+                            {passwordMatchingStatus.text}
+                        </Text>
+                    )}
+                </View>
+
+                <View
+                    style={{
+                        marginTop: 'auto',
+                    }}
+                >
+                    <CustomButton
+                        onPress={handleSignUp}
+                        loading={isLoading}
+                        buttonText="회원가입"
+                    />
+                </View>
+            </ScrollView>
+        </SafeAreaView>
     );
 }
 
