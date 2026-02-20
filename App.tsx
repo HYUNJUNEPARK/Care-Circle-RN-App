@@ -18,7 +18,7 @@ export default function App() {
         <Tab.Navigator
           initialRouteName="Home"
           screenOptions={{
-            tabBarActiveTintColor:  colors.primary,
+            tabBarActiveTintColor: colors.primary,
             tabBarInactiveTintColor: 'gray', // 비활성 아이콘 색상
           }}
         >

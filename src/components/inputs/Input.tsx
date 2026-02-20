@@ -29,11 +29,11 @@ export default function Input({
         <View style={{
             display: "flex",
             flexDirection: "column",
-            marginBottom: 8
+            marginBottom: 2
         }}>
             <Text style={{
                 fontSize: 14,
-                marginBottom: 8,
+                marginBottom: 2,
                 color: "#000",
                 textAlign: "left",
                 marginLeft: 4

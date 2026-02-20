@@ -5,7 +5,6 @@ import Input from '../../components/inputs/Input';
 import colors from '../../styles/colors';
 import { useState } from 'react';
 import { appIcon, appText } from '../../assets';
-
 interface SignInScreenProps {
   navigation: any;
 }
@@ -13,7 +12,6 @@ interface SignInScreenProps {
 const SignInScreen = ({ navigation }: SignInScreenProps) => {
   const state = navigation.getState();
   const routes = state.routes;
-  const { showAlert } = useTextModal();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -26,7 +24,7 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
         flexGrow: 1,
         backgroundColor: colors.background,
         justifyContent: 'center',
-        padding: 24,
+        padding: 12,
       }}
       keyboardShouldPersistTaps="handled"
     >
@@ -100,8 +98,8 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
           <Text
             style={{
               marginLeft: 8,
-              fontSize: 14,
-              fontWeight: '700',
+              fontSize: 12,
+              fontWeight: '500',
               color: '#4b5563',
             }}
           >
@@ -175,7 +173,7 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
             style={{
               fontSize: 14,
               fontWeight: '700',
-              color: '#2563eb',
+              color: colors.primary,
             }}
           >
             회원가입
