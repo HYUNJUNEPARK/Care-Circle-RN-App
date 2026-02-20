@@ -6,7 +6,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 /**
  * 인증 상태 관리 훅
  */
-export const useAuth = () => {
+const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -20,3 +20,5 @@ export const useAuth = () => {
 
   return { user, loading };
 };
+
+export default useAuth;

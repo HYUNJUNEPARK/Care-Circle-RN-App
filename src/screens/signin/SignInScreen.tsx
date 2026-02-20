@@ -6,6 +6,7 @@ import colors from '../../styles/colors';
 import { useEffect, useState } from 'react';
 import { appIcon, appText } from '../../assets';
 import useSignInByEmail from './useSignInByEmail';
+import useAuth from '../../auth/useAuth';
 
 interface SignInScreenProps {
   navigation: any;
