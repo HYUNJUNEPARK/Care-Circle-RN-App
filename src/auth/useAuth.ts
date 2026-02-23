@@ -5,20 +5,22 @@ import { onAuthStateChanged } from 'firebase/auth';
 
 /**
  * 인증 상태 관리 훅
+ * 컴포넌트에서 현재 로그인된 사용자 상태에 쉽게 접근할 수 있도록 제공
  */
 const useAuth = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
 
+  // Firebase 인증 상태 변경 감지
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
-      setLoading(false);
     });
-    return unsubscribe;
+
+    // 컴포넌트 언마운트 시 구독 해제
+    return unsubscribe; 
   }, []);
 
-  return { user, loading };
+  return { user };
 };
 
 export default useAuth;

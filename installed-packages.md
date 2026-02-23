@@ -13,7 +13,13 @@ npm install react-native-webview
 npm install react-native-dotenv 
 npm install --save-dev babel-preset-expo
 
+//네트워크 통신
+npm install axios
+npm install @tanstack/react-query
+
+//firebase
 npm install firebase
 
+//아이콘
 npm install @expo/vector-icons
 -> https://icons.expo.fyi/Index
