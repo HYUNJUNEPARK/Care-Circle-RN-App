@@ -33,7 +33,7 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
     }
   });
 
-  return user ? (
+  return userInfo ? (
     //로그인 상태 사용자 프로필 화면
     <LoggedInProfileScreen />
   ) : (

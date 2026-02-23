@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-
+import { View, StyleSheet, ScrollView, Text } from 'react-native';
+import { appIcon } from '../../assets';
+import CustomButton from '../../components/buttons/CustomButton';
 
 interface GuestProfileScreenProps {
   navigation: any;
@@ -15,36 +16,21 @@ const GuestProfileScreen = ({ navigation }: GuestProfileScreenProps) => {
 
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      {/* <Text style={{ marginBottom: 24 }}>미로그인 사용자 프로필 화면</Text> */}
-      <TouchableOpacity
-        style={styles.loginButton}
-        onPress={() => {
-          // 로그인 화면으로 이동하는 로직을 여기에 추가
-          navigation.navigate('SignIn');
+    <ScrollView>
+      <View style={{ paddingVertical: 16, paddingHorizontal: 8 }}>
 
-        }}
-      >
-        <Text style={styles.loginButtonText}>로그인 하기 {'>'}</Text>
-        <View style={styles.platformImagesContainer}>
-          <View style={styles.circleImage}>
-            {/* 로그인 플랫폼 이미지 1 */}
-            <Image
-              // source={require('../../assets/img/placeholder1.png')}
-              style={styles.image}
-            />
-          </View>
-          <View style={styles.circleImage}>
-            {/* 로그인 플랫폼 이미지 2 */}
-            <Image
-              // source={require('../../assets/img/placeholder2.png')}
-              style={styles.image}
-            />
-          </View>
-        </View>
 
-      </TouchableOpacity>
-    </View>
+        <Text style={{ fontSize: 16, marginBottom: 12 }}>
+          로그인하고 더 많은 기능을 이용해보세요.
+        </Text>
+
+        <CustomButton
+          buttonText='로그인 하기'
+          onPress={() => navigation.navigate('SignIn')} />
+
+      </View>
+    </ScrollView>
+
   );
 };
 
@@ -55,7 +41,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 12,
     paddingHorizontal: 24,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: 'rgba(0,0,0,0.1)',
     borderRadius: 24,
     marginTop: 16,
   },
@@ -67,7 +53,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: '#ffffff',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 8,

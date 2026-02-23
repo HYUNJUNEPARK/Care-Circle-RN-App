@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { appIcon, appText } from '../../assets';
 import useSignInByEmail from './useSignInByEmail';
 import useAuth from '../../auth/useAuth';
+//import { Button } from 'react-native/types_generated/index';
 
 interface SignInScreenProps {
   navigation: any;
@@ -22,19 +23,14 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
   const [rememberId, setRememberId] = useState(false);
 
   const { signInByEmail, isLoading, error } = useSignInByEmail();
-  const [loginSuccess, setLoginSuccess] = useState<boolean | null>(null);
 
   const handleLogin = async () => {
-    setLoginSuccess(null);
-
     await signInByEmail(email, password);
+
+    //TODO 예외처리 필요함 -> 로그인 실패도 지금 넘어감
+    navigation.goBack();
   };
 
-
-  useEffect(() => {
-    if (!error) return;
-    setLoginSuccess(false);
-  }, [error]);
 
   return (
     <ScrollView
@@ -131,14 +127,13 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
           buttonText='로그인'
           loading={isLoading}
           onPress={handleLogin}
-
         />
-        {loginSuccess === true && (
+        {/* {loginSuccess === true && (
           <Text style={{ color: 'green', marginTop: 8 }}>로그인 성공!</Text>
         )}
         {loginSuccess === false && (
           <Text style={{ color: 'red', marginTop: 8 }}>로그인 실패: {error?.message}</Text>
-        )}
+        )} */}
       </View>
 
       <View>
