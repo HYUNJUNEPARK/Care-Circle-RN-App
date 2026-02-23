@@ -38,7 +38,7 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
     <LoggedInProfileScreen />
   ) : (
     //미로그인 시 로그인 화면
-    <GuestProfileScreen />
+    <GuestProfileScreen navigation={navigation} />
   );
 
 };
