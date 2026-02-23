@@ -1,7 +1,8 @@
 import { BackHandler } from 'react-native';
 import useBackHandler from '../../hooks/useBackHandler';
 import useTextModal from '../../components/modals/useTextModal';
-import SignInScreen from '../signin/SignInScreen';
+import GuestProfileScreen from './GuestProfileScreen';
+import LoggedInProfileScreen from './LoggedInProfileScreen';
 import useAuth from '../../auth/useAuth';
 
 interface ProfileScreenProps {
@@ -12,7 +13,7 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
   const state = navigation.getState();
   const routes = state.routes;
   const { showAlert } = useTextModal();
-  const { user } = useAuth();
+  const { user, userInfo } = useAuth();
 
   useBackHandler({
     onBackPress: () => {
@@ -34,10 +35,10 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
 
   return user ? (
     //로그인 상태 사용자 프로필 화면
-    <></>
+    <LoggedInProfileScreen />
   ) : (
     //미로그인 시 로그인 화면
-    <SignInScreen navigation={navigation} />
+    <GuestProfileScreen />
   );
 
 };
