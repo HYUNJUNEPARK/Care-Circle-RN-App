@@ -11,10 +11,10 @@
     "kill:mac": "kill -9 $(lsof -ti:8081) || true",
     "kill:win": "for /f \"tokens=5\" %a in ('netstat -ano ^| findstr :8081') do taskkill /F /PID %a",
     "reverse:port": "adb reverse tcp:5173 tcp:5173 && adb reverse tcp:4000 tcp:4000",
-    "start:mac": "npm run kill:mac && APP_ENV=development EXPO_OFFLINE=1 npm run expo:start",
-    "start:mac:prod": "npm run kill:mac && APP_ENV=production EXPO_OFFLINE=1 npm run expo:start",
-    "start:win": "npm run kill:win && set APP_ENV=development&& set EXPO_OFFLINE=1&& npm run expo:start",
-    "start:win:prod": "npm run kill:win && set APP_ENV=production&& set EXPO_OFFLINE=1&& npm run expo:start"
+    "start:m": "npm run kill:mac && APP_ENV=development EXPO_OFFLINE=1 npm run expo:start",
+    "start:m:prod": "npm run kill:mac && APP_ENV=production EXPO_OFFLINE=1 npm run expo:start",
+    "start:w": "npm run kill:win && set APP_ENV=development&& set EXPO_OFFLINE=1&& npm run expo:start",
+    "start:w:prod": "npm run kill:win && set APP_ENV=production&& set EXPO_OFFLINE=1&& npm run expo:start"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
@@ -25,6 +25,7 @@
     "@tanstack/react-query": "^5.90.21",
     "axios": "^1.13.5",
     "expo": "~54.0.33",
+    "expo-checkbox": "^5.0.8",
     "expo-status-bar": "~3.0.9",
     "firebase": "^12.9.0",
     "install": "^0.13.0",

@@ -20,6 +20,11 @@ npm install @tanstack/react-query
 //firebase
 npm install firebase
 
-//아이콘
+
+//ui
+npx expo install expo-checkbox (-> X)
+npm i expo-checkbox (버전 호환이 완벽하다는 보장은 없음)
+
+
 npm install @expo/vector-icons
 -> https://icons.expo.fyi/Index

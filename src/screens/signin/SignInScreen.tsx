@@ -7,8 +7,7 @@ import { useEffect, useState } from 'react';
 import { appIcon, appText } from '../../assets';
 import useSignInByEmail from './useSignInByEmail';
 import useAuth from '../../auth/useAuth';
-//import { Button } from 'react-native/types_generated/index';
-
+import Checkbox from 'expo-checkbox';
 interface SignInScreenProps {
   navigation: any;
 }
@@ -21,7 +20,6 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberId, setRememberId] = useState(false);
-
   const { signInByEmail, isLoading, error } = useSignInByEmail();
 
   const handleLogin = async () => {
@@ -103,22 +101,23 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
             marginTop: 8,
           }}
         >
-          {/* <Checkbox
-            status={rememberId ? 'checked' : 'unchecked'}
-            onPress={() => setRememberId(!rememberId)}
-            color="#2563eb"
-            uncheckedColor="#d1d5db"
-          /> */}
-          <Text
-            style={{
-              marginLeft: 8,
-              fontSize: 12,
-              fontWeight: '500',
-              color: '#4b5563',
-            }}
-          >
-            아이디 기억하기
-          </Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Checkbox
+              value={rememberId}
+              onValueChange={setRememberId}
+              color={colors.primary}
+              style={{ marginRight: 8 }}
+            />
+            <Text
+              style={{
+                fontSize: 12,
+                fontWeight: '500',
+                color: '#4b5563',
+              }}
+            >
+              아이디 기억하기
+            </Text>
+          </View>
         </View>
         <CustomButton
           style={{
@@ -128,12 +127,6 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
           loading={isLoading}
           onPress={handleLogin}
         />
-        {/* {loginSuccess === true && (
-          <Text style={{ color: 'green', marginTop: 8 }}>로그인 성공!</Text>
-        )}
-        {loginSuccess === false && (
-          <Text style={{ color: 'red', marginTop: 8 }}>로그인 실패: {error?.message}</Text>
-        )} */}
       </View>
 
       <View>
