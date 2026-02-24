@@ -20,6 +20,9 @@ npm install @tanstack/react-query
 //firebase
 npm install firebase
 
+//storgage
+npx expo install @react-native-async-storage/async-storage (->X)
+npm install @react-native-async-storage/async-storage
 
 //ui
 npx expo install expo-checkbox (-> X)

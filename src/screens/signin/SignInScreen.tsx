@@ -1,34 +1,88 @@
 import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
-import useTextModal from '../../components/modals/useTextModal';
 import CustomButton from '../../components/buttons/CustomButton';
 import Input from '../../components/inputs/Input';
 import colors from '../../styles/colors';
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import { appIcon, appText } from '../../assets';
 import useSignInByEmail from './useSignInByEmail';
-import useAuth from '../../auth/useAuth';
 import Checkbox from 'expo-checkbox';
+import { storage, StorageKeys } from '../../utils/storage';
+import useAuth from '../../auth/useAuth'
+
+
 interface SignInScreenProps {
   navigation: any;
 }
 
 const SignInScreen = ({ navigation }: SignInScreenProps) => {
-  const state = navigation.getState();
-  const routes = state.routes;
+  // const state = navigation.getState();
+  // const routes = state.routes;
+  const { userInfo } = useAuth();
 
-  const [email, setEmail] = useState('');
+
+  const [id, setId] = useState('');
+  const [rememberId, setRememberId] = useState(false);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberId, setRememberId] = useState(false);
   const { signInByEmail, isLoading, error } = useSignInByEmail();
 
+  //최초 진입 시 저장된 아이디 불러오기
+  useEffect(() => {
+    //저장된 아이디 불러오기
+    const loadSavedId = async () => {
+      try {
+        const savedId = await storage.get<string>(StorageKeys.REMEMBERED_USER_ID);
+        if (savedId) {
+          setId(savedId);
+          setRememberId(true);
+        }
+      } catch (e) {
+        console.log('아이디 불러오기 실패', e);
+      }
+    };
+    loadSavedId();
+  }, []);
+
+  //아이디 기억하기
+  useEffect(() => {
+    const updateRememberedId = async () => {
+      // 체크 해제 시 즉시 삭제
+      if (!rememberId) {
+        await storage.remove(StorageKeys.REMEMBERED_USER_ID);
+      } else {
+        // 체크를 켰는데 id가 이미 있으면 즉시 저장
+        if (id.trim()) await storage.set<string>(StorageKeys.REMEMBERED_USER_ID, id.trim());
+      }
+    };
+    updateRememberedId();
+  }, [rememberId]);
+
+  //로그인 성공 시 처리 (userInfo 변경 감지)
+  useEffect(() => {
+    const succcessLogin = async () => {
+      if (rememberId) {
+        await storage.set<string>(StorageKeys.REMEMBERED_USER_ID, id);
+      } else {
+        await storage.remove(StorageKeys.REMEMBERED_USER_ID);
+      }
+
+      navigation.goBack();
+    }
+
+    if (userInfo) {
+      succcessLogin();
+    }
+  }, [userInfo]);
+
+  //로그인 처리
   const handleLogin = async () => {
-    await signInByEmail(email, password);
-
-    //TODO 예외처리 필요함 -> 로그인 실패도 지금 넘어감
-    navigation.goBack();
+    try {
+      if (!id.trim() || !password) return;
+      await signInByEmail(id.trim(), password);
+    } catch (e) {
+      console.log('로그인 실패', e);
+    }
   };
-
 
   return (
     <ScrollView
@@ -79,15 +133,15 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
           inputType="plaintext"
           id="email"
           label=""
-          placeholder="your@email.com"
-          value={email}
-          onChange={setEmail}
+          placeholder="아이디"
+          value={id}
+          onChange={setId}
         />
         <Input
           inputType="password"
           id="password"
           label=""
-          placeholder="••••••••"
+          placeholder="비밀번호"
           value={password}
           onChange={setPassword}
           show={showPassword}

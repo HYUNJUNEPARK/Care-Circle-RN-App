@@ -13,7 +13,7 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
   const state = navigation.getState();
   const routes = state.routes;
   const { showAlert } = useTextModal();
-  const { user, userInfo } = useAuth();
+  const { userInfo } = useAuth();
 
   useBackHandler({
     onBackPress: () => {

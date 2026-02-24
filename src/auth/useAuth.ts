@@ -17,14 +17,14 @@ const useAuth = () => {
   // Firebase 인증 상태 변경 감지
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      console.log('Auth state changed:', user);
 
       if (user) {
         try {
           setLoading(true);
           // 서버와 사용자 정보 가져오기
           const userInfo = await getLoginUserInfo();
-
-          //TODO 사용자 정보에 따라서 분기 처리야함(회원탈퇴, 정지 등)
+          console.log('Fetched user info:', userInfo);
 
           setUserInfo(userInfo);
           setUser(user);
