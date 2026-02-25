@@ -2,13 +2,16 @@ import * as React from 'react';
 import { TextModalProvider } from './src/components/modals/TextModalProvider';
 import { NavigationContainer } from '@react-navigation/native';
 import StackNavigator from './src/navigators/StackNavigator';
+import { AuthProvider } from './src/auth/AuthProvider';
 
 export default function App() {
   return (
     <TextModalProvider>
-      <NavigationContainer>
+      <AuthProvider>
+        <NavigationContainer>
           <StackNavigator />
-      </NavigationContainer>
+        </NavigationContainer>
+      </AuthProvider>
     </TextModalProvider>
   );
 }

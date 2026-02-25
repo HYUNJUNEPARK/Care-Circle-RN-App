@@ -2,12 +2,11 @@ import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 import CustomButton from '../../components/buttons/CustomButton';
 import Input from '../../components/inputs/Input';
 import colors from '../../styles/colors';
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { appIcon, appText } from '../../assets';
-import useSignInByEmail from './useSignInByEmail';
 import Checkbox from 'expo-checkbox';
 import { storage, StorageKeys } from '../../utils/storage';
-//import useAuth from '../../auth/useAuth'
+import useAuth from '../../auth/useAuth';
 
 
 interface SignInScreenProps {
@@ -15,16 +14,12 @@ interface SignInScreenProps {
 }
 
 const SignInScreen = ({ navigation }: SignInScreenProps) => {
-  // const state = navigation.getState();
-  // const routes = state.routes;
-  // const { userInfo } = useAuth();
-
-
   const [id, setId] = useState('');
   const [rememberId, setRememberId] = useState(false);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const { signInByEmail, isLoading, error } = useSignInByEmail();
+  const { loginWithEmail, isLoading } = useAuth();
+
 
   //최초 진입 시 저장된 아이디 불러오기
   useEffect(() => {
@@ -57,31 +52,15 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
     updateRememberedId();
   }, [rememberId]);
 
-  //로그인 성공 시 처리 (userInfo 변경 감지)
-  // useEffect(() => {
-  //   const succcessLogin = async () => {
-  //     if (rememberId) {
-  //       await storage.set<string>(StorageKeys.REMEMBERED_USER_ID, id);
-  //     } else {
-  //       await storage.remove(StorageKeys.REMEMBERED_USER_ID);
-  //     }
-
-  //     navigation.goBack();
-  //   }
-
-  //   if (userInfo) {
-  //     succcessLogin();
-  //   }
-  // }, [userInfo]);
-
   //로그인 처리
   const handleLogin = async () => {
     try {
       if (!id.trim() || !password) return;
-      await signInByEmail(id.trim(), password);
 
-
-
+      const isSucess = await loginWithEmail(id.trim(), password);
+      if (isSucess) {
+        navigation.goBack();
+      }
 
     } catch (e) {
       console.log('로그인 실패', e);

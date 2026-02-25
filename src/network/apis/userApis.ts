@@ -13,14 +13,14 @@ const userApiUrl = `/api/users`
  * 
  * @returns true 동기화 성공, false 동기화 실패
  */
-export async function syncMeToServer(): Promise<boolean> {
-    const res = await privateAxios.post(
-        `${userApiUrl}/sync`,
-        {},
-        {},
-    );
-    return Boolean(res.data.success);
-}
+// export async function syncMeToServer(): Promise<boolean> {
+//     const res = await privateAxios.post(
+//         `${userApiUrl}/sync`,
+//         {},
+//         {},
+//     );
+//     return Boolean(res.data.success);
+// }
 
 /**
  * 로그아웃
@@ -42,6 +42,7 @@ export async function checkValidEmail(email: string) {
 
 /**
  * 로그인 사용자 정보 가져오기
+ * //TODO syncMeToServer() 백단에서 기능 합쳐도 될듯 !
  */
 export async function getLoginUserInfo(): Promise<UserInfo> {
     const res = await privateAxios.get(
