@@ -13,7 +13,7 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
   const state = navigation.getState();
   const routes = state.routes;
   const { showAlert } = useTextModal();
-  const { userInfo } = useAuth();
+  const { user } = useAuth();
 
   useBackHandler({
     onBackPress: () => {
@@ -33,7 +33,7 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
     }
   });
 
-  return userInfo ? (
+  return user ? (
     //로그인 상태 사용자 프로필 화면
     <LoggedInProfileScreen />
   ) : (

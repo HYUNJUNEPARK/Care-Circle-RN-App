@@ -7,7 +7,7 @@ import { appIcon, appText } from '../../assets';
 import useSignInByEmail from './useSignInByEmail';
 import Checkbox from 'expo-checkbox';
 import { storage, StorageKeys } from '../../utils/storage';
-import useAuth from '../../auth/useAuth'
+//import useAuth from '../../auth/useAuth'
 
 
 interface SignInScreenProps {
@@ -17,7 +17,7 @@ interface SignInScreenProps {
 const SignInScreen = ({ navigation }: SignInScreenProps) => {
   // const state = navigation.getState();
   // const routes = state.routes;
-  const { userInfo } = useAuth();
+  // const { userInfo } = useAuth();
 
 
   const [id, setId] = useState('');
@@ -58,27 +58,31 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
   }, [rememberId]);
 
   //로그인 성공 시 처리 (userInfo 변경 감지)
-  useEffect(() => {
-    const succcessLogin = async () => {
-      if (rememberId) {
-        await storage.set<string>(StorageKeys.REMEMBERED_USER_ID, id);
-      } else {
-        await storage.remove(StorageKeys.REMEMBERED_USER_ID);
-      }
+  // useEffect(() => {
+  //   const succcessLogin = async () => {
+  //     if (rememberId) {
+  //       await storage.set<string>(StorageKeys.REMEMBERED_USER_ID, id);
+  //     } else {
+  //       await storage.remove(StorageKeys.REMEMBERED_USER_ID);
+  //     }
 
-      navigation.goBack();
-    }
+  //     navigation.goBack();
+  //   }
 
-    if (userInfo) {
-      succcessLogin();
-    }
-  }, [userInfo]);
+  //   if (userInfo) {
+  //     succcessLogin();
+  //   }
+  // }, [userInfo]);
 
   //로그인 처리
   const handleLogin = async () => {
     try {
       if (!id.trim() || !password) return;
       await signInByEmail(id.trim(), password);
+
+
+
+
     } catch (e) {
       console.log('로그인 실패', e);
     }

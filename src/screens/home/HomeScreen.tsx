@@ -1,10 +1,11 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { WebView, WebViewMessageEvent, WebViewNavigation } from 'react-native-webview';
 import { BackHandler } from 'react-native';
 import useTextModal from '../../components/modals/useTextModal';
 import useBackHandler from '../../hooks/useBackHandler';
 import { WEB_URL } from '@env';
+import useAuth from '../../auth/useAuth';
 
 interface HomeScreenProps {
   navigation: any;
@@ -14,6 +15,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const webViewRef = useRef<WebView>(null);
   const canGoBack = useRef(false);
   const { showAlert } = useTextModal();
+  // const { customToken } = useAuth();
 
   useBackHandler({
     onBackPress: () => {
@@ -37,6 +39,21 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
     }
   });
 
+  // useEffect(() => {
+  //   // 커스텀 토큰이 발급되면 웹뷰에 로그인 상태 전달
+  //   if (customToken && webViewRef.current) {
+  //     // const script = `window.postMessage(${JSON.stringify({ type: 'LOGIN_SUCCESS', token: customToken })}, '*');`;
+  //     // webViewRef.current.injectJavaScript(script);
+
+
+  //     //웹뷰에 커스텀 토큰 메시지 보내기
+  //     webViewRef.current?.postMessage(
+  //       JSON.stringify({ type: "CUSTOM_TOKEN", customToken })
+  //     );
+  //   }
+  // }, [customToken]);
+
+
   /**
    * 웹뷰 내비게이션 상태 변경 핸들러
    */
@@ -45,7 +62,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   }
 
   /**
-   * 웹뷰에서 메시지 수신 핸들러
+   * 웹뷰가 보낸 메시지 수신 핸들러
    */
   const handleWebViewMessage = (event: WebViewMessageEvent) => {
     try {

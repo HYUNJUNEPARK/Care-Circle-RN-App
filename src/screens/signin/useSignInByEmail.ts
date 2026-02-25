@@ -11,6 +11,9 @@ function useSignInByEmail() {
             setLoading(true);
             //FB 서버 로그인
             await signInWithEmailAndPassword(auth, email, password);
+
+            
+
         } catch (error) {
             console.error('useSignInByEmail', error);
             setError(error as Error);
