@@ -96,11 +96,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         try {
             // 1. 서버 로그아웃 처리: Firebase 로그아웃 처리를 뒤에 해야 헤더에 토큰이 들어감
             await signOut();
-            // 2. Firebase 로그아웃 처리
-            await auth.signOut();
         } catch (err) {
             console.error('logout error:', err);
         } finally {
+            // 2. Firebase 로그아웃 처리(네트워크 통신 안해서 finally에서 처리)
+            await auth.signOut();
             setUserInfo(null);
             setCustomToken(null);
         }

@@ -6,7 +6,7 @@ import useTextModal from '../../components/modals/useTextModal';
 import useBackHandler from '../../hooks/useBackHandler';
 import { WEB_URL } from '@env';
 import useAuth from '../../auth/useAuth';
-
+import WEBVIEW_MESSAGE_TYPE from '../../consts/webviewMessageTypes';
 interface HomeScreenProps {
   navigation: any;
 }
@@ -16,6 +16,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const canGoBack = useRef(false);
   const { showAlert } = useTextModal();
   const { customToken } = useAuth();
+  const { logout } = useAuth();
 
   useBackHandler({
     onBackPress: () => {
@@ -53,7 +54,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         window.dispatchEvent(new MessageEvent('message', {
           data: ${JSON.stringify(
             {
-              type: "CUSTOM_TOKEN",
+              type: WEBVIEW_MESSAGE_TYPE.CUSTOM_TOKEN,
               payload: customToken
             }
           )}
@@ -62,7 +63,6 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
       `);
     }
   }, [customToken]);
-
 
   /**
    * 웹뷰 내비게이션 상태 변경 핸들러
@@ -79,13 +79,17 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
       const data = JSON.parse(event.nativeEvent.data);
 
       switch (data.type) {
-        case 'NAVIGATE_SIGN_IN':
+        case WEBVIEW_MESSAGE_TYPE.NAVIGATE_SIGN_IN:
           console.log(`WEBVIEW_BRIDGE: ${data.type}`);
           navigation.navigate('Profile');
           break;
-        case 'WEBVIEW_LOG':
+        case WEBVIEW_MESSAGE_TYPE.LOG:
           console.log(`WEBVIEW_BRIDGE: ${data.type} | ${data.message}`);
           break;
+        case WEBVIEW_MESSAGE_TYPE.LOG_OUT:
+          console.log(`WEBVIEW_BRIDGE: ${data.type}`);
+          logout();
+          break;  
         // 다른 메시지 타입 처리 가능
         default:
           console.log('UNKNOWN_WEBVIEW_MESSAGE:', event.nativeEvent.data);
