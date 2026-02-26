@@ -6,6 +6,7 @@ import useTextModal from '../../components/modals/useTextModal';
 import useBackHandler from '../../hooks/useBackHandler';
 import { WEB_URL } from '@env';
 import useAuth from '../../auth/useAuth';
+
 interface HomeScreenProps {
   navigation: any;
 }
@@ -38,23 +39,27 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
     }
   });
 
+  // RN에서 로그인 후 커스텀 토큰이 발급되면 웹뷰에 커스텀 토큰 전달
   useEffect(() => {
-    console.info(`HomeScreen - customToken: ${customToken}`);
-
     if (!customToken) {
       console.warn('No custom token available, skipping WebView message injection');
       return;
     }
+    console.info(`HomeScreen - customToken: ${customToken.substring(0, 10)}...`);
 
     // 커스텀 토큰이 발급되면 웹뷰에 로그인 상태 전달
     if (customToken && webViewRef.current) {
-      // const script = `window.postMessage(${JSON.stringify({ type: 'LOGIN_SUCCESS', token: customToken })}, '*');`;
-      // webViewRef.current.injectJavaScript(script);
-
-      //웹뷰에 커스텀 토큰 메시지 보내기
-      webViewRef.current?.postMessage(
-        JSON.stringify({ type: "CUSTOM_TOKEN", customToken })
-      );
+      webViewRef.current?.injectJavaScript(`
+        window.dispatchEvent(new MessageEvent('message', {
+          data: ${JSON.stringify(
+            {
+              type: "CUSTOM_TOKEN",
+              payload: customToken
+            }
+          )}
+        }));
+        true;
+      `);
     }
   }, [customToken]);
 
@@ -72,8 +77,18 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const handleWebViewMessage = (event: WebViewMessageEvent) => {
     try {
       const data = JSON.parse(event.nativeEvent.data);
-      if (data.type === 'NAVIGATE_SIGN_IN') {
-        navigation.navigate('Profile')
+
+      switch (data.type) {
+        case 'NAVIGATE_SIGN_IN':
+          console.log(`WEBVIEW_BRIDGE: ${data.type}`);
+          navigation.navigate('Profile');
+          break;
+        case 'WEBVIEW_LOG':
+          console.log(`WEBVIEW_BRIDGE: ${data.type} | ${data.message}`);
+          break;
+        // 다른 메시지 타입 처리 가능
+        default:
+          console.log('UNKNOWN_WEBVIEW_MESSAGE:', event.nativeEvent.data);
       }
     } catch (e) {
       // 메시지 파싱 실패 시 무시
@@ -88,7 +103,9 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         source={{ uri: WEB_URL }}
         style={{ flex: 1 }}
         onNavigationStateChange={handleNavigationStateChange} //웹페이지를 이동할 때마다 onNavigationStateChange 호출
-        onMessage={handleWebViewMessage}
+        onMessage={(event) => {
+          handleWebViewMessage(event)
+        }}
       />
     </SafeAreaView>
   );

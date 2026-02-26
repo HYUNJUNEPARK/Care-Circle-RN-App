@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView, Text } from 'react-native';
-import { appIcon } from '../../assets';
 import CustomButton from '../../components/buttons/CustomButton';
 
 interface GuestProfileScreenProps {
@@ -26,7 +25,9 @@ const GuestProfileScreen = ({ navigation }: GuestProfileScreenProps) => {
 
         <CustomButton
           buttonText='로그인 하기'
-          onPress={() => navigation.navigate('SignIn')} />
+          onPress={() => {
+            navigation.navigate('SignIn');
+          }} />
 
       </View>
     </ScrollView>
