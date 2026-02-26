@@ -5,7 +5,6 @@ import { BackHandler } from 'react-native';
 import useTextModal from '../../components/modals/useTextModal';
 import useBackHandler from '../../hooks/useBackHandler';
 import { WEB_URL } from '@env';
-import useAuth from '../../auth/useAuth';
 
 interface HomeScreenProps {
   navigation: any;

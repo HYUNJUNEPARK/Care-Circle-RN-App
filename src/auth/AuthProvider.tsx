@@ -32,7 +32,6 @@ export const AuthContext = createContext<AuthContextValue | null>(null);
  * @param children 하위 컴포넌트들
  */
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-    const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -43,19 +42,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // 사용자 로그인/로그아웃 시 자동으로 user 상태 업데이트
         const unsub = onAuthStateChanged(auth, (user) => {
             console.log('AuthProvider - onAuthStateChanged', user);
-            setUser(user); // Firebase에서 받은 사용자 정보로 상태 업데이트
         });
         // 컴포넌트 언마운트 시 리스너 정리 (메모리 누수 방지)
         return () => unsub();
-    }, [user, userInfo]);
+    }, []);
 
     /**
      * 로그인 처리:
      * - Firebase 인증 처리 (signInWithEmailAndPassword)
      * - 로그인 성공 시 서버에서 사용자 정보 동기화 (getLoginUserInfo)
-     * - 로그인 실패 시 에러 상태 업데이트
      */
     const loginWithEmail = useCallback(async (email: string, password: string): Promise<boolean> => {
+        console.info('called AuthProvider - loginWithEmail');
+
         setIsLoading(true);
         setError(null);
         try {
@@ -77,19 +76,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     /**
      * 로그아웃 처리:
+     * - 서버 로그아웃 처리 (signOut)
      * - Firebase에서 로그아웃 처리
-     * - React 상태 초기화 (userInfo, error)
      */
     const logout = useCallback(async () => {
-        // console.log('AuthProvider - logout called, current user:', auth.currentUser);
-
-        const currentUser = auth.currentUser;
-        console.log('AuthProvider - logout, current user:', currentUser);
-
-        if (!user) {
-            console.warn('No user to log out');
-            return;
-        }
+        console.info('called AuthProvider - logout');
 
         try {
             // 1. 서버 로그아웃 처리: Firebase 로그아웃 처리를 뒤에 해야 헤더에 토큰이 들어감
