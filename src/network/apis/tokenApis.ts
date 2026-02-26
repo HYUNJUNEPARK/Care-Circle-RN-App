@@ -1,18 +1,28 @@
-import privateAxios from '../axios/privateAxios';
+import publicAxios from '../axios/publicAxios';
+import { CustomTokenResponse, CustomToken } from '../../types/remote/Token';
 
 const tokenApiUrl = `/api/token`;
 
 /**
  * 커스텀 토큰 발급 요청
  */
-export async function getCustomToken(): Promise<string> {
-    const res = await privateAxios.post(
-        `${tokenApiUrl}/custom-token`
+export async function getCustomToken(idToken: string): Promise<string> {
+    const res = await publicAxios.post<CustomTokenResponse>(
+        `${tokenApiUrl}/custom-token`,
+        {},
+        {
+            headers: {
+                'Authorization': `Bearer ${idToken}`
+            }   
+        }
     );
 
-    if(!res.data.success) {
+    const resData = res.data;
+    if(!resData.success) {
         throw new Error(`Custom token request failed`);
     }
 
-    return "";
+    const customTokenData: CustomToken = resData.data;
+    const customToken = customTokenData.customToken;
+    return customToken;
 }

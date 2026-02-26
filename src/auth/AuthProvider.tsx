@@ -3,6 +3,7 @@ import { onAuthStateChanged, type User, signInWithEmailAndPassword } from "fireb
 import { auth } from "./firebaseAuth";
 import { getLoginUserInfo, signOut } from '../network/apis/userApis';
 import type { UserInfo } from '../types/local/UserInfo';
+import { getCustomToken } from "../network/apis/tokenApis";
 
 /**
  * 인증 관련 상태를 제공하는 Context의 값 타입
@@ -12,6 +13,7 @@ type AuthContextValue = {
     isLoading: boolean;     // 로그인 처리 중 여부
     isLoggedIn: boolean;    // 로그인 여부
     error: string | null;   // 인증 관련 에러 메시지
+    customToken: string | null; // 서버에서 발급받은 커스텀 토큰 (로그아웃 시 null)
     loginWithEmail: (email: string, password: string) => Promise<boolean>; // 로그인 함수
     logout: () => void; // 로그아웃 함수
 };
@@ -34,6 +36,7 @@ export const AuthContext = createContext<AuthContextValue | null>(null);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [isLoading, setIsLoading] = useState(false);
     const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+    const [customToken, setCustomToken] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     // Firebase 인증 상태 변화를 감지하고 React 상태와 동기화
@@ -41,7 +44,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // Firebase Auth 상태 변화 리스너 등록
         // 사용자 로그인/로그아웃 시 자동으로 user 상태 업데이트
         const unsub = onAuthStateChanged(auth, (user) => {
-            console.log('AuthProvider - onAuthStateChanged', user);
+            console.log('AuthProvider - onAuthStateChanged', user?.email);
         });
         // 컴포넌트 언마운트 시 리스너 정리 (메모리 누수 방지)
         return () => unsub();
@@ -59,14 +62,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setError(null);
         try {
             // 1. Firebase 인증
-            await signInWithEmailAndPassword(auth, email, password);
-            // 2. 서버 사용자 정보 동기화
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+            // 2. Custom Token 발급 (Firebase ID Token)
+            const idToken = await userCredential.user.getIdToken();
+            const customToken = await getCustomToken(idToken);
+
+            // 3. 서버 사용자 정보
             const userInfo = await getLoginUserInfo();
             setUserInfo(userInfo);
+            setCustomToken(customToken);
             setIsLoading(false);
             return true;
         } catch (err: any) {
             console.error('login error:', err);
+            auth.signOut(); // 로그인 실패 시 Firebase 로그아웃 처리 (세션 초기화)
+            setCustomToken(null);
             setUserInfo(null);
             setError(err?.message || '로그인에 실패했습니다.');
             setIsLoading(false);
@@ -85,20 +96,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         try {
             // 1. 서버 로그아웃 처리: Firebase 로그아웃 처리를 뒤에 해야 헤더에 토큰이 들어감
             await signOut();
-
             // 2. Firebase 로그아웃 처리
             await auth.signOut();
         } catch (err) {
             console.error('logout error:', err);
         } finally {
             setUserInfo(null);
+            setCustomToken(null);
         }
     }, []);
 
     // user 상태가 변경될 때마다 새로운 context 값 생성 (성능 최적화)
     const value = useMemo<AuthContextValue>(
-        () => ({ userInfo, isLoading, isLoggedIn: !!userInfo, error, loginWithEmail, logout }),
-        [userInfo, isLoading, error, loginWithEmail, logout]
+        () => ({ userInfo, isLoading, isLoggedIn: !!userInfo, error, customToken, loginWithEmail, logout }),
+        [userInfo, isLoading, error, customToken, loginWithEmail, logout]
     );
 
     return (
