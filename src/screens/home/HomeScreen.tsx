@@ -105,7 +105,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
       switch (data.type) {
         case WEBVIEW_MESSAGE_TYPE.NAVIGATE_SIGN_IN:
           console.log(`WEBVIEW_BRIDGE: ${data.type}`);
-          navigation.navigate('Profile');
+          navigation.navigate('Setting');
           break;
         case WEBVIEW_MESSAGE_TYPE.LOG:
           console.log(`WEBVIEW_BRIDGE: ${data.type} | ${data.message}`);

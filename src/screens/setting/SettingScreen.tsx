@@ -1,15 +1,15 @@
 import { BackHandler } from 'react-native';
 import useBackHandler from '../../hooks/useBackHandler';
 import useTextModal from '../../components/modals/useTextModal';
-import GuestProfileScreen from './GuestProfileScreen';
-import LoggedInProfileScreen from './LoggedInProfileScreen';
+import GuestSettingScreen from './GuestSettingScreen';
+import LoggedInSettingScreen from './LoggedInSettingScreen';
 import useAuth from '../../auth/useAuth';
 
-interface ProfileScreenProps {
+interface SettingScreenProps {
   navigation: any;
 }
 
-const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
+const SettingScreen = ({ navigation }: SettingScreenProps) => {
   const state = navigation.getState();
   const routes = state.routes;
   const { showAlert } = useTextModal();
@@ -35,12 +35,12 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
 
   return userInfo ? (
     //로그인 상태 사용자 프로필 화면
-    <LoggedInProfileScreen />
+    <LoggedInSettingScreen />
   ) : (
     //미로그인 시 로그인 화면
-    <GuestProfileScreen navigation={navigation} />
+    <GuestSettingScreen navigation={navigation} />
   );
 
 };
 
-export default ProfileScreen;
+export default SettingScreen;
