@@ -35,6 +35,7 @@ export const AuthContext = createContext<AuthContextValue | null>(null);
  */
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [isLoading, setIsLoading] = useState(false);
+    const [user, setUser] = useState<User | null>(null);
     const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
     const [customToken, setCustomToken] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -45,6 +46,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // 사용자 로그인/로그아웃 시 자동으로 user 상태 업데이트
         const unsub = onAuthStateChanged(auth, (user) => {
             console.log('AuthProvider - onAuthStateChanged', user?.email);
+            setUser(user);
         });
         // 컴포넌트 언마운트 시 리스너 정리 (메모리 누수 방지)
         return () => unsub();
@@ -108,8 +110,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     // user 상태가 변경될 때마다 새로운 context 값 생성 (성능 최적화)
     const value = useMemo<AuthContextValue>(
-        () => ({ userInfo, isLoading, isLoggedIn: !!userInfo, error, customToken, loginWithEmail, logout }),
-        [userInfo, isLoading, error, customToken, loginWithEmail, logout]
+        () => ({
+            userInfo,
+            isLoading,
+            isLoggedIn: !!user,
+            error,
+            customToken,
+            loginWithEmail,
+            logout
+        }),
+        [userInfo, user, isLoading, error, customToken, loginWithEmail, logout]
     );
 
     return (

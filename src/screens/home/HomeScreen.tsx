@@ -15,7 +15,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const webViewRef = useRef<WebView>(null);
   const canGoBack = useRef(false);
   const { showAlert } = useTextModal();
-  const { customToken } = useAuth();
+  const { customToken, isLoggedIn } = useAuth();
   const { logout } = useAuth();
 
   useBackHandler({
@@ -43,26 +43,50 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   // RN에서 로그인 후 커스텀 토큰이 발급되면 웹뷰에 커스텀 토큰 전달
   useEffect(() => {
     if (!customToken) {
-      console.warn('No custom token available, skipping WebView message injection');
+      console.warn('No customToken, 웹뷰 토큰 전달 스킵');
       return;
     }
-    console.info(`HomeScreen - customToken: ${customToken.substring(0, 10)}...`);
 
     // 커스텀 토큰이 발급되면 웹뷰에 로그인 상태 전달
-    if (customToken && webViewRef.current) {
+    if (webViewRef.current) {
+      console.info(`HomeScreen - customToken 웹뷰로 전달: ${customToken.substring(0, 10)}...`);
       webViewRef.current?.injectJavaScript(`
         window.dispatchEvent(new MessageEvent('message', {
           data: ${JSON.stringify(
-            {
-              type: WEBVIEW_MESSAGE_TYPE.CUSTOM_TOKEN,
-              payload: customToken
-            }
-          )}
+        {
+          type: WEBVIEW_MESSAGE_TYPE.CUSTOM_TOKEN,
+          payload: customToken
+        }
+      )}
         }));
         true;
       `);
     }
   }, [customToken]);
+
+  // RN에서 로그아웃 시 웹뷰에 로그아웃 메시지 전달
+  useEffect(() => {
+    console.info(`HomeScreen - 로그인 상태: ${isLoggedIn}`);
+
+    if (isLoggedIn) {
+      console.info('사용자 로그인 상태, 로그아웃 메시지 전달 생략');
+      return;
+    }
+
+    if (webViewRef.current) {
+      console.info('사용자 로그인 상태, 로그아웃 메시지 웹뷰로 전달');
+      webViewRef.current?.injectJavaScript(`
+        window.dispatchEvent(new MessageEvent('message', {
+          data: ${JSON.stringify(
+        {
+          type: WEBVIEW_MESSAGE_TYPE.LOG_OUT
+        }
+      )}
+        }));
+        true;
+      `);
+    }
+  }, [isLoggedIn]);
 
   /**
    * 웹뷰 내비게이션 상태 변경 핸들러
@@ -89,7 +113,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         case WEBVIEW_MESSAGE_TYPE.LOG_OUT:
           console.log(`WEBVIEW_BRIDGE: ${data.type}`);
           logout();
-          break;  
+          break;
         // 다른 메시지 타입 처리 가능
         default:
           console.log('UNKNOWN_WEBVIEW_MESSAGE:', event.nativeEvent.data);
