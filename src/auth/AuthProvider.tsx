@@ -12,10 +12,10 @@ type AuthContextValue = {
     userInfo: UserInfo | null; // 서버에서 가져온 로그인 사용자 정보 (로그아웃 시 null)
     isLoading: boolean;     // 로그인 처리 중 여부
     isLoggedIn: boolean;    // 로그인 여부
-    error: string | null;   // 인증 관련 에러 메시지
+    error: Error | null;   // 인증 관련 에러 메시지
     customToken: string | null; // 서버에서 발급받은 커스텀 토큰 (로그아웃 시 null)
-    loginWithEmail: (email: string, password: string) => Promise<boolean>; // 로그인 함수
-    logout: () => void; // 로그아웃 함수
+    logInWithEmail: (email: string, password: string) => Promise<boolean>; // 로그인 함수
+    logOut: () => void; // 로그아웃 함수
 };
 
 /**
@@ -38,7 +38,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
     const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
     const [customToken, setCustomToken] = useState<string | null>(null);
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState<Error | null>(null);
 
     // Firebase 인증 상태 변화를 감지하고 React 상태와 동기화
     useEffect(() => {
@@ -57,7 +57,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
      * - Firebase 인증 처리 (signInWithEmailAndPassword)
      * - 로그인 성공 시 서버에서 사용자 정보 동기화 (getLoginUserInfo)
      */
-    const loginWithEmail = useCallback(async (email: string, password: string): Promise<boolean> => {
+    const logInWithEmail = useCallback(async (email: string, password: string): Promise<boolean> => {
         console.info('called AuthProvider - loginWithEmail');
 
         setIsLoading(true);
@@ -76,12 +76,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             setCustomToken(customToken);
             setIsLoading(false);
             return true;
-        } catch (err: any) {
-            console.error('login error:', err);
+        } catch (error) {
+            console.error('login error:', error);
             auth.signOut(); // 로그인 실패 시 Firebase 로그아웃 처리 (세션 초기화)
             setCustomToken(null);
             setUserInfo(null);
-            setError(err?.message || '로그인에 실패했습니다.');
+            setError(error as Error);
             setIsLoading(false);
             return false;
         }
@@ -92,14 +92,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
      * - 서버 로그아웃 처리 (signOut)
      * - Firebase에서 로그아웃 처리
      */
-    const logout = useCallback(async () => {
+    const logOut = useCallback(async () => {
         console.info('called AuthProvider - logout');
 
         try {
             // 1. 서버 로그아웃 처리: Firebase 로그아웃 처리를 뒤에 해야 헤더에 토큰이 들어감
             await signOut();
-        } catch (err) {
-            console.error('logout error:', err);
+        } catch (error) {
+            console.error('logout error:', error);
         } finally {
             // 2. Firebase 로그아웃 처리(네트워크 통신 안해서 finally에서 처리)
             await auth.signOut();
@@ -116,10 +116,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             isLoggedIn: !!user,
             error,
             customToken,
-            loginWithEmail,
-            logout
+            logInWithEmail,
+            logOut
         }),
-        [userInfo, user, isLoading, error, customToken, loginWithEmail, logout]
+        [userInfo, user, isLoading, error, customToken, logInWithEmail, logOut]
     );
 
     return (

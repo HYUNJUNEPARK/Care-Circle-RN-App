@@ -16,7 +16,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const canGoBack = useRef(false);
   const { showAlert } = useTextModal();
   const { customToken, isLoggedIn } = useAuth();
-  const { logout } = useAuth();
+  const { logOut: logout } = useAuth();
 
   useBackHandler({
     onBackPress: () => {

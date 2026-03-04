@@ -35,12 +35,11 @@ const SettingScreen = ({ navigation }: SettingScreenProps) => {
 
   return userInfo ? (
     //로그인 상태 사용자 프로필 화면
-    <LoggedInSettingScreen />
+    <LoggedInSettingScreen navigation={navigation}/>
   ) : (
     //미로그인 시 로그인 화면
     <GuestSettingScreen navigation={navigation} />
   );
-
 };
 
 export default SettingScreen;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { use } from 'react';
 import useAuth from '../../auth/useAuth';
 import { View, Text, Button, TouchableOpacity, ScrollView } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -16,19 +16,11 @@ type SettingSection = {
 
 const SETTINGS: SettingSection[] = [
   {
-    title: '개인 정보',
+    title: '앱 정보',
     items: [
-      { icon: 'id-card-outline', label: '계정' },
-      { icon: 'lock-closed-outline', label: '개인 정보 보호' },
-    ],
-  },
-
-  {
-    title: '개인 정보',
-    items: [
-      { icon: 'person-outline', label: '프로필' },
-      { icon: 'id-card-outline', label: '계정' },
-      { icon: 'lock-closed-outline', label: '개인 정보 보호' },
+      { icon: 'megaphone-outline', label: '공지사항' },
+      { icon: 'shield-checkmark-outline', label: '개인 정보 처리 방침' },
+      { icon: 'document-outline', label: '이용 약관' },
     ],
   },
 ];
@@ -63,8 +55,8 @@ const SettingSectionBlock = ({ section }: { section: SettingSection }) => (
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              paddingVertical: 15,
-              paddingHorizontal: 16,
+              paddingVertical: 16,
+              paddingHorizontal: 12,
               backgroundColor: '#FFFFFF',
               borderTopLeftRadius: isFirst ? 12 : 0,
               borderTopRightRadius: isFirst ? 12 : 0,
@@ -91,19 +83,23 @@ const SettingSectionBlock = ({ section }: { section: SettingSection }) => (
   </View>
 );
 
+interface LoggedInSettingScreenProps {
+  navigation: any;
+}
+
+
 /**
  * 로그인 사용자 설정 화면 컴포넌트
  * 로그인한 사용자가 설정 화면에 접근했을 때 보여지는 화면
  */
-const LoggedInSettingScreen = () => {
-  const { userInfo, logout } = useAuth();
+const LoggedInSettingScreen = ({ navigation }: LoggedInSettingScreenProps) => {
+  const { userInfo, logOut: logout } = useAuth();
 
   return (
     <ScrollView
       style={{
         flex: 1,
-        paddingVertical: 12,
-        paddingHorizontal: 16
+        padding: 16,
       }}
     // showsVerticalScrollIndicator={false}
     >
@@ -111,14 +107,14 @@ const LoggedInSettingScreen = () => {
 
       <TouchableOpacity
         onPress={() => {
-
+          navigation.navigate('Profile');
         }}
         activeOpacity={0.6}
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          paddingVertical: 15,
-          paddingHorizontal: 16,
+          paddingVertical: 16,
+          paddingHorizontal: 12,
           backgroundColor: '#FFFFFF',
           borderRadius: 12,
           borderBottomColor: '#E8E8E8',
@@ -131,22 +127,17 @@ const LoggedInSettingScreen = () => {
           style={{ width: 32, textAlign: 'center', marginRight: 12 }}
         />
         <Text style={{ flex: 1, fontSize: 16, fontWeight: '500', color: '#191919' }}>
-          프로필
+          {userInfo?.email}
         </Text>
         <Text style={{ fontSize: 22, color: '#C4C4C4' }}>›</Text>
       </TouchableOpacity>
-
 
       {SETTINGS.map((section, idx) => (
         <SettingSectionBlock key={idx} section={section} />
       ))}
 
-      <Button title="로그아웃" onPress={logout} />
     </ScrollView>
   );
 };
-
-
-
 
 export default LoggedInSettingScreen;

@@ -18,7 +18,7 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
   const [rememberId, setRememberId] = useState(false);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const { loginWithEmail, isLoading } = useAuth();
+  const { logInWithEmail: loginWithEmail, isLoading } = useAuth();
 
 
   //최초 진입 시 저장된 아이디 불러오기
