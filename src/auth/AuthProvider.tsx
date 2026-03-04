@@ -10,6 +10,7 @@ import { getCustomToken } from "../network/apis/tokenApis";
  */
 type AuthContextValue = {
     userInfo: UserInfo | null; // 서버에서 가져온 로그인 사용자 정보 (로그아웃 시 null)
+    user: User | null; // Firebase에서 가져온 사용자 정보 (로그아웃 시 null)
     isLoading: boolean;     // 로그인 처리 중 여부
     isLoggedIn: boolean;    // 로그인 여부
     error: Error | null;   // 인증 관련 에러 메시지
@@ -112,6 +113,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const value = useMemo<AuthContextValue>(
         () => ({
             userInfo,
+            user,
             isLoading,
             isLoggedIn: !!user,
             error,
