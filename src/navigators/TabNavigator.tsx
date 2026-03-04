@@ -2,9 +2,10 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/home/HomeScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
-import Octicons from '@expo/vector-icons/Octicons';
+//import Octicons from '@expo/vector-icons/Octicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import colors from '../styles/colors';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 const Tab = createBottomTabNavigator();
 
@@ -31,10 +32,11 @@ export default function TabNavigator() {
         name="Profile"
         component={ProfileScreen}
         options={{
-          title: '프로필',
+          title: '설정',
           headerTitleAlign: 'center',
           tabBarIcon: ({ color, size }) => (
-            <Octicons name="person" size={size} color={color} />
+            // <Octicons name="person" size={size} color={color} />
+            <Ionicons name="settings-outline" size={size} color={color} />
           ),
         }}
       />
