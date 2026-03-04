@@ -3,7 +3,7 @@ import CustomButton from '../../components/buttons/CustomButton';
 import Input from '../../components/inputs/Input';
 import colors from '../../styles/colors';
 import { useEffect, useState } from 'react';
-import { appIcon, appText } from '../../assets';
+import { appIcon, appText } from '../../../assets';
 import Checkbox from 'expo-checkbox';
 import { storage, StorageKeys } from '../../utils/storage';
 import useAuth from '../../auth/useAuth';
@@ -18,7 +18,7 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
   const [rememberId, setRememberId] = useState(false);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const { logInWithEmail: loginWithEmail, isLoading } = useAuth();
+  const { logInWithEmail, isLoading } = useAuth();
 
 
   //최초 진입 시 저장된 아이디 불러오기
@@ -57,7 +57,7 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
     try {
       if (!id.trim() || !password) return;
 
-      const isSucess = await loginWithEmail(id.trim(), password);
+      const isSucess = await logInWithEmail(id.trim(), password);
       if (isSucess) {
         navigation.goBack();
       }

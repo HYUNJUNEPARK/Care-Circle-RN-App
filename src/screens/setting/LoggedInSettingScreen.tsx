@@ -3,7 +3,7 @@ import useAuth from '../../auth/useAuth';
 import { View, Text, Button, TouchableOpacity, ScrollView } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Image } from 'react-native';
-import { appIcon } from '../../assets';
+import { appIcon } from '../../../assets';
 
 type SettingItem = {
   icon: keyof typeof Ionicons.glyphMap;
@@ -132,7 +132,7 @@ const LoggedInSettingScreen = ({ navigation }: LoggedInSettingScreenProps) => {
         }}>
           <Image
             source={appIcon}
-            style={{ width: 28, height: 28 }}
+            style={{ width: 32, height: 32 }}
             resizeMode="contain"
           />
         </View>
