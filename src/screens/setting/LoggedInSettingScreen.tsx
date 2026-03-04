@@ -2,6 +2,8 @@ import React, { use } from 'react';
 import useAuth from '../../auth/useAuth';
 import { View, Text, Button, TouchableOpacity, ScrollView } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { Image } from 'react-native';
+import { appIcon } from '../../assets';
 
 type SettingItem = {
   icon: keyof typeof Ionicons.glyphMap;
@@ -101,10 +103,7 @@ const LoggedInSettingScreen = ({ navigation }: LoggedInSettingScreenProps) => {
         flex: 1,
         padding: 16,
       }}
-    // showsVerticalScrollIndicator={false}
     >
-      {/* <StatusBar barStyle="dark-content" backgroundColor="#F2F3F5" /> */}
-
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('Profile');
@@ -120,12 +119,23 @@ const LoggedInSettingScreen = ({ navigation }: LoggedInSettingScreenProps) => {
           borderBottomColor: '#E8E8E8',
         }}
       >
-        <Ionicons
-          name={'person-outline'}
-          size={24}
-          color="#191919"
-          style={{ width: 32, textAlign: 'center', marginRight: 12 }}
-        />
+        <View style={{
+          width: 52,
+          height: 52,
+          borderRadius: 26,
+          backgroundColor: '#ffffff',
+          borderColor: '#f3f3f3',
+          borderWidth: 1.2,
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginRight: 12,
+        }}>
+          <Image
+            source={appIcon}
+            style={{ width: 28, height: 28 }}
+            resizeMode="contain"
+          />
+        </View>
         <Text style={{ flex: 1, fontSize: 16, fontWeight: '500', color: '#191919' }}>
           {userInfo?.email}
         </Text>
