@@ -52,3 +52,15 @@ export async function getLoginUserInfo(): Promise<UserInfo> {
     const user = converToUser(rUser)
     return user;
 }
+/**
+ * 닉네임 변경
+ * @param nickname 새로운 닉네임
+ * @returns 서버 응답 데이터
+ */
+export async function updateNickname(nickname: string) {
+    const res = await privateAxios.patch(
+        `${userApiUrl}/nickname`,
+        { nickname }
+    );
+    return res.data;
+}

@@ -4,7 +4,7 @@ import TabNavigator from './TabNavigator';
 import SignUpScreen from '../screens/signup/SignUpScreen';
 import SignInScreen from '../screens/signin/SignInScreen';
 import ProfileScreen from '../screens/profile/main/ProfileScreen';
-import EditNicknameScreen from '../screens/profile/nicname/EditNicknameScreen';
+import EditNicknameScreen from '../screens/profile/nickname/EditNicknameScreen';
 import EditEmailScreen from '../screens/profile/email/EditEmailScreen';
 
 const Stack = createStackNavigator();
