@@ -6,6 +6,7 @@ import SignInScreen from '../screens/signin/SignInScreen';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 import EditNicknameScreen from '../screens/edit/nickname/EditNicknameScreen';
 import EditEmailScreen from '../screens/edit/email/EditEmailScreen';
+import WebviewViewer from '../screens/viewer/WebviewViewer';
 
 const Stack = createStackNavigator();
 
@@ -54,6 +55,14 @@ export default function StackNavigator() {
                 component={EditEmailScreen}
                 options={{
                     title: '이메일',
+                    headerTitleAlign: 'center',
+                }}
+            />
+            <Stack.Screen
+                name="WebviewViewer"
+                component={WebviewViewer}
+                options={{
+                    title: "",
                     headerTitleAlign: 'center',
                 }}
             />
