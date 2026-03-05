@@ -45,7 +45,7 @@ function ProfileItemTab({
                 {showArrow && <MaterialIcons name="chevron-right" size={18} color="#bbb" />}
             </View>
 
-            <View style={{ width: '100%', height: 1, backgroundColor: '#eee', marginVertical: 22 }} />
+            <View style={{ width: '100%', height: 1, backgroundColor: '#eee', marginVertical: 20 }} />
         </Container>
     );
 }

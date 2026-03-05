@@ -1,12 +1,11 @@
 import React from 'react';
-import { View, ScrollView, Text, Image } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { View, ScrollView, Text } from 'react-native';
 import ProfileItemTab from './components/ProfileItemTab';
 import PlainTab from './components/PlainTab';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import CustomButton from '../../../components/buttons/CustomButton';
 import useAuth from '../../../auth/useAuth';
 import { appIcon } from '../../../../assets';
+import CircleProfileImage from '../../../components/images/CircleProfileImage';
 
 interface ProfileScreenProps {
   navigation: any;
@@ -25,16 +24,12 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
         showsVerticalScrollIndicator={false}
       >
         <View style={{ flex: 1 }}>
-          {/* 프로필 이미지 원형 아바타 */}
-          <View style={{ alignItems: 'center', marginBottom: 16 }}>
-            <View style={{ padding: 8, backgroundColor: '#fff', borderRadius: 50, borderWidth: 1, borderColor: '#d7d7d7' }}>
-              <Image
-                source={user?.photoURL ? { uri: user.photoURL } : appIcon}
-                style={{ width: 66, height: 66, borderRadius: 33, backgroundColor: '#fff' }}
-                resizeMode="cover"
-              />
-            </View>
-          </View>
+     
+          <CircleProfileImage
+            style={{ marginBottom: 24 }}
+            imgUrl={user?.photoURL}
+            size={62}
+          />
 
           <ProfileItemTab
             label="아이디"
@@ -60,8 +55,6 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
 
         {/* 하단 영역 */}
         <View style={{ marginTop: 'auto', alignItems: 'center' }}>
-
-
           <PlainTab
             label="로그아웃"
             onPress={async () => {
@@ -69,14 +62,12 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
               navigation.goBack();
             }}
           />
-
           <PlainTab
             label="계정탈퇴"
             onPress={() => {
 
             }}
           />
-
         </View>
       </ScrollView>
     </SafeAreaView>

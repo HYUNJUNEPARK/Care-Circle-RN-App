@@ -4,6 +4,7 @@ import { View, Text, Button, TouchableOpacity, ScrollView } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Image } from 'react-native';
 import { appIcon } from '../../../assets';
+import CircleProfileImage from '../../components/images/CircleProfileImage';
 
 type SettingItem = {
   icon: keyof typeof Ionicons.glyphMap;
@@ -22,7 +23,7 @@ const SETTINGS: SettingSection[] = [
     items: [
       { icon: 'megaphone-outline', label: '공지사항' },
       { icon: 'shield-checkmark-outline', label: '개인 정보 처리 방침' },
-      { icon: 'document-outline', label: '이용 약관' },
+      { icon: 'document-text-outline', label: '이용 약관' },
     ],
   },
 ];
@@ -64,7 +65,6 @@ const SettingSectionBlock = ({ section }: { section: SettingSection }) => (
               borderTopRightRadius: isFirst ? 12 : 0,
               borderBottomLeftRadius: isLast ? 12 : 0,
               borderBottomRightRadius: isLast ? 12 : 0,
-              // borderBottomWidth: isLast ? 0 : StyleSheet.hairlineWidth,
               borderBottomColor: '#E8E8E8',
             }}
           >
@@ -95,7 +95,7 @@ interface LoggedInSettingScreenProps {
  * 로그인한 사용자가 설정 화면에 접근했을 때 보여지는 화면
  */
 const LoggedInSettingScreen = ({ navigation }: LoggedInSettingScreenProps) => {
-  const { userInfo, logOut: logout } = useAuth();
+  const { userInfo, user } = useAuth();
 
   return (
     <ScrollView
@@ -119,25 +119,14 @@ const LoggedInSettingScreen = ({ navigation }: LoggedInSettingScreenProps) => {
           borderBottomColor: '#E8E8E8',
         }}
       >
-        <View style={{
-          width: 52,
-          height: 52,
-          borderRadius: 26,
-          backgroundColor: '#ffffff',
-          borderColor: '#f3f3f3',
-          borderWidth: 1.2,
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginRight: 12,
-        }}>
-          <Image
-            source={appIcon}
-            style={{ width: 32, height: 32 }}
-            resizeMode="contain"
-          />
-        </View>
-        <Text style={{ flex: 1, fontSize: 16, fontWeight: '500', color: '#191919' }}>
-          {userInfo?.email}
+
+        <CircleProfileImage
+          imgUrl={user?.photoURL}
+          size={26}
+        />
+
+        <Text style={{ flex: 1, fontSize: 16, fontWeight: '500', color: '#191919', marginLeft: 12 }}>
+          {user?.email}
         </Text>
         <Text style={{ fontSize: 22, color: '#C4C4C4' }}>›</Text>
       </TouchableOpacity>
