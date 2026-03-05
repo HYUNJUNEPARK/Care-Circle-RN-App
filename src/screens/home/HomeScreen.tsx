@@ -4,7 +4,7 @@ import { WebView, WebViewMessageEvent, WebViewNavigation } from 'react-native-we
 import { BackHandler } from 'react-native';
 import useTextModal from '../../components/modals/useTextModal';
 import useBackHandler from '../../hooks/useBackHandler';
-import { WEB_URL } from '@env';
+import { BASE_WEB_URL } from '../../consts/url';
 import useAuth from '../../auth/useAuth';
 import WEBVIEW_MESSAGE_TYPE from '../../consts/webviewMessageTypes';
 interface HomeScreenProps {
@@ -128,7 +128,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
     <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
       <WebView
         ref={webViewRef}
-        source={{ uri: WEB_URL }}
+        source={{ uri: BASE_WEB_URL }}
         style={{ flex: 1 }}
         onNavigationStateChange={handleNavigationStateChange} //웹페이지를 이동할 때마다 onNavigationStateChange 호출
         onMessage={(event) => {

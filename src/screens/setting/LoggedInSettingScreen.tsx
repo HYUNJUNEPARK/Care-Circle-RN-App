@@ -3,9 +3,13 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import useAuth from '../../auth/useAuth';
 import CircleProfileImage from '../../components/images/CircleProfileImage';
+import { WebviewViewerTitleType } from '../viewer/WebviewViewer';
+import { PRIVACY_URL, TERMS_URL } from '../../consts/url';
+
 type SettingItem = {
   icon: keyof typeof Ionicons.glyphMap;
   label: string;
+  type?: WebviewViewerTitleType;
   path?: string;
   url?: string;
 };
@@ -20,8 +24,8 @@ const SETTINGS: SettingSection[] = [
     title: '앱 정보',
     items: [
       { icon: 'megaphone-outline', label: '공지사항' },
-      { icon: 'shield-checkmark-outline', label: '개인 정보 처리 방침', path: 'WebviewViewer', url: 'https://www.google.com/' },
-      { icon: 'document-text-outline', label: '이용 약관', path: 'WebviewViewer', url: 'https://www.google.com/' },
+      { icon: 'shield-checkmark-outline', label: '개인 정보 처리 방침', type: WebviewViewerTitleType.Privacy, path: 'WebviewViewer', url: PRIVACY_URL },
+      { icon: 'document-text-outline', label: '이용 약관', type: WebviewViewerTitleType.Terms, path: 'WebviewViewer', url: TERMS_URL },
     ],
   },
 ];
@@ -59,14 +63,14 @@ const LoggedInSettingScreen = ({ navigation }: LoggedInSettingScreenProps) => {
           backgroundColor: '#FFFFFF',
           borderRadius: 12,
           borderBottomColor: '#E8E8E8',
-        }}  
+        }}
       >
         <CircleProfileImage
           imgUrl={user?.photoURL}
           size={26}
         />
         <Text style={{ flex: 1, fontSize: 16, fontWeight: '500', color: '#191919', marginLeft: 12 }}>
-          {user?.displayName ?? user?.email} 
+          {user?.displayName ?? user?.email}
         </Text>
         <Text style={{ fontSize: 22, color: '#C4C4C4' }}>›</Text>
       </TouchableOpacity>
@@ -96,7 +100,7 @@ const LoggedInSettingScreen = ({ navigation }: LoggedInSettingScreenProps) => {
                   onPress={() => {
                     // WebviewViewer로 이동 (예시 URI 사용)
                     if (item.path == "WebviewViewer" && item.url) {
-                      navigation.navigate(item.path, { uri: item.url });
+                      navigation.navigate(item.path, { uri: item.url, type: item.type });
                     }
 
 
