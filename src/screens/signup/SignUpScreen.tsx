@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Input from '../../components/inputs/Input';
-import CustomButton from '../../components/buttons/CustomButton';
+import RoundedButton from '../../components/buttons/RoundedButton';
 import colors from '../../styles/colors';
 
 export default function SignUpScreen() {
@@ -123,7 +123,7 @@ export default function SignUpScreen() {
                         marginTop: 'auto',
                     }}
                 >
-                    <CustomButton
+                    <RoundedButton
                         onPress={handleSignUp}
                         loading={isLoading}
                         buttonText="회원가입"

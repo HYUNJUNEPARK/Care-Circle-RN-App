@@ -1,5 +1,5 @@
 import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
-import CustomButton from '../../components/buttons/CustomButton';
+import RoundedButton from '../../components/buttons/RoundedButton';
 import Input from '../../components/inputs/Input';
 import colors from '../../styles/colors';
 import { useEffect, useState } from 'react';
@@ -70,7 +70,6 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
   return (
     <ScrollView
       contentContainerStyle={{
-        flexGrow: 1,
         backgroundColor: colors.background,
         justifyContent: 'center',
         padding: 12,
@@ -156,7 +155,7 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
             </Text>
           </View>
         </View>
-        <CustomButton
+        <RoundedButton
           style={{
             marginTop: 18,
           }}
@@ -166,42 +165,9 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
         />
       </View>
 
-      <View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginBottom: 24,
-          }}
-        >
-          <View
-            style={{
-              flex: 1,
-              height: 1,
-              backgroundColor: '#d1d5db',
-            }}
-          />
-          <Text
-            style={{
-              marginHorizontal: 16,
-              fontWeight: '700',
-              color: '#6b7280',
-              fontSize: 14,
-            }}
-          >
-            또는
-          </Text>
-          <View
-            style={{
-              flex: 1,
-              height: 1,
-              backgroundColor: '#d1d5db',
-            }}
-          />
-        </View>
-      </View>
 
-      <CustomButton buttonText="Google" />
+
+
 
       <View
         style={{
@@ -234,6 +200,9 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
           </Text>
         </TouchableOpacity>
       </View>
+
+
+
     </ScrollView>
   );
 };

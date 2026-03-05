@@ -1,10 +1,9 @@
 import React from 'react';
-import { View, ScrollView, Text } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import ProfileItemTab from './components/ProfileItemTab';
 import PlainTab from './components/PlainTab';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import useAuth from '../../../auth/useAuth';
-import { appIcon } from '../../../../assets';
 import CircleProfileImage from '../../../components/images/CircleProfileImage';
 
 interface ProfileScreenProps {
@@ -24,7 +23,7 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
         showsVerticalScrollIndicator={false}
       >
         <View style={{ flex: 1 }}>
-     
+
           <CircleProfileImage
             style={{ marginBottom: 24 }}
             imgUrl={user?.photoURL}
@@ -63,10 +62,8 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
             }}
           />
           <PlainTab
-            label="계정탈퇴"
-            onPress={() => {
-
-            }}
+            label="Care Circle 탈퇴"
+            textColor='#fa1717'
           />
         </View>
       </ScrollView>

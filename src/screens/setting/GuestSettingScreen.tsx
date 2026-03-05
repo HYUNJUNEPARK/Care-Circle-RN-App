@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView, Text } from 'react-native';
-import CustomButton from '../../components/buttons/CustomButton';
+import RoundedButton from '../../components/buttons/RoundedButton';
 
 interface GuestSettingScreenProps {
   navigation: any;
@@ -23,7 +23,7 @@ const GuestSettingScreen = ({ navigation }: GuestSettingScreenProps) => {
           로그인하고 더 많은 기능을 이용해보세요.
         </Text>
 
-        <CustomButton
+        <RoundedButton
           buttonText='로그인 하기'
           onPress={() => {
             navigation.navigate('SignIn');
