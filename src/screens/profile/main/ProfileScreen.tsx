@@ -4,6 +4,7 @@ import ProfileItemTab from './components/ProfileItemTab';
 import PlainTab from './components/PlainTab';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import useAuth from '../../../auth/useAuth';
+import useTextModal from '../../../components/modals/useTextModal';
 import CircleProfileImage from '../../../components/images/CircleProfileImage';
 
 interface ProfileScreenProps {
@@ -16,6 +17,7 @@ interface ProfileScreenProps {
  */
 const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
   const { user, logOut } = useAuth();
+  const { showAlert } = useTextModal();
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }} edges={['bottom']}>
       <ScrollView
@@ -47,7 +49,7 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
 
           <ProfileItemTab
             label="닉네임"
-            value={user?.displayName ?? '-'}
+            value={user?.displayName ?? '등록 안함'}
             onPress={() => {
               navigation.navigate('EditNicknameScreen')
             }}
@@ -58,9 +60,15 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
         <View style={{ marginTop: 'auto', alignItems: 'center' }}>
           <PlainTab
             label="로그아웃"
-            onPress={async () => {
-              await logOut();
-              navigation.goBack();
+            onPress={() => {
+              showAlert({
+                title: '로그아웃',
+                message: '정말 로그아웃 하시겠습니까?',
+                onConfirmAction: async () => {
+                  await logOut();
+                  navigation.goBack();
+                },
+              });
             }}
           />
           <PlainTab

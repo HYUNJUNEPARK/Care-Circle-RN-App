@@ -36,7 +36,7 @@ const EditNicknameScreen = () => {
                 />
 
                 <RectangleButton
-                    title="저장"
+                    title="등록"
                     enabled={isButtonEnabled}
                     onPress={() => {
                         handleSave();
