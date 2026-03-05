@@ -3,9 +3,9 @@ import { View, ScrollView } from 'react-native';
 import ProfileItemTab from './components/ProfileItemTab';
 import PlainTab from './components/PlainTab';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import useAuth from '../../../auth/useAuth';
-import useTextModal from '../../../components/modals/useTextModal';
-import CircleProfileImage from '../../../components/images/CircleProfileImage';
+import useAuth from '../../auth/useAuth';
+import useTextModal from '../../components/modals/useTextModal';
+import CircleProfileImage from '../../components/images/CircleProfileImage';
 
 interface ProfileScreenProps {
   navigation: any;

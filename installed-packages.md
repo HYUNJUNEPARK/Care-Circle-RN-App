@@ -28,6 +28,8 @@ npm install @react-native-async-storage/async-storage
 npx expo install expo-checkbox (-> X)
 npm i expo-checkbox (버전 호환이 완벽하다는 보장은 없음)
 
+//React Native 토스트 메시지
+npm install react-native-toast-message
 
 npm install @expo/vector-icons
 -> https://icons.expo.fyi/Index

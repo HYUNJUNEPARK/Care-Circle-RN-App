@@ -9,6 +9,8 @@ export default function useUpdateNickname() {
     const [error, setError] = useState<Error | null>(null);
 
     const updateNickname = async (nickname: string) => {
+        console.info('updateNickname called with nickname:', nickname);
+        
         setLoading(true);
         setError(null);
         try {

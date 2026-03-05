@@ -11,10 +11,12 @@ export interface ApiErrorResponse {
 }
 
 /**
- * 
+ * 에러 처리 함수
  */
-export default function handleError(error: Error | unknown): string {
+export default function handleError(error?: Error | unknown): string {
     try {
+        if (!error) return "";
+
         if (axios.isAxiosError(error)) {
             //API 서버 에러 처리
 

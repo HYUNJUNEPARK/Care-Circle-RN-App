@@ -6,9 +6,10 @@ import RectangleButton from '../../../components/buttons/RectangleButton';
 import LabeledCounterInput from '../../../components/inputs/LabeledCounterInput';
 import useUpdateNickname from './useUpdateNickname';
 import handleError from '../../../error/handleError';
+import Toast from 'react-native-toast-message';
 
 const EditNicknameScreen = () => {
-    const { user } = useAuth();
+    const { user, reloadCureentUser } = useAuth();
     const [nickname, setNickname] = useState(user?.displayName ?? '');
     const { updateNickname, loading, error } = useUpdateNickname();
     const isButtonEnabled = nickname.trim().length > 0; // 버튼 활성화 조건: 이름이 1글자 이상일 때
@@ -17,10 +18,9 @@ const EditNicknameScreen = () => {
         const isSuccess = await updateNickname(nickname);
 
         if (isSuccess) {
-            // 성공적으로 닉네임이 변경된 경우, 이전 화면으로 돌아가기
-            // navigation.goBack(); // navigation이 필요한 경우 주석 해제
+            await reloadCureentUser();
+            Toast.show({ text1: '닉네임이 변경되었습니다.' });
         }
-
     };
 
     return (

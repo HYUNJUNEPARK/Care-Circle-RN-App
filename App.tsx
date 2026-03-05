@@ -3,13 +3,16 @@ import { TextModalProvider } from './src/components/modals/TextModalProvider';
 import { NavigationContainer } from '@react-navigation/native';
 import StackNavigator from './src/navigators/StackNavigator';
 import { AuthProvider } from './src/auth/AuthProvider';
+import Toast from 'react-native-toast-message';
 
 export default function App() {
   return (
+    
     <TextModalProvider>
       <AuthProvider>
         <NavigationContainer>
           <StackNavigator />
+          <Toast/>
         </NavigationContainer>
       </AuthProvider>
     </TextModalProvider>

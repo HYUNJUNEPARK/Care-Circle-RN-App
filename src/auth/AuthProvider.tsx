@@ -15,6 +15,7 @@ type AuthContextValue = {
     isLoggedIn: boolean;    // 로그인 여부
     error: Error | null;   // 인증 관련 에러 메시지
     customToken: string | null; // 서버에서 발급받은 커스텀 토큰 (로그아웃 시 null)
+    reloadCureentUser: () => Promise<void>; // 현재 사용자 정보 새로고침 함수
     logInWithEmail: (email: string, password: string) => Promise<boolean>; // 로그인 함수
     logOut: () => void; // 로그아웃 함수
 };
@@ -51,6 +52,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         });
         // 컴포넌트 언마운트 시 리스너 정리 (메모리 누수 방지)
         return () => unsub();
+    }, []);
+
+    const reloadCureentUser = useCallback(async () => {
+        if (auth.currentUser) {
+            await auth.currentUser.reload();
+            setUser(auth.currentUser);
+        }
     }, []);
 
     /**
@@ -118,10 +126,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             isLoggedIn: !!user,
             error,
             customToken,
+            reloadCureentUser,
             logInWithEmail,
             logOut
         }),
-        [userInfo, user, isLoading, error, customToken, logInWithEmail, logOut]
+        [userInfo, user, isLoading, error, customToken, reloadCureentUser, logInWithEmail, logOut]
     );
 
     return (
