@@ -3,7 +3,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import TabNavigator from './TabNavigator';
 import SignUpScreen from '../screens/signup/SignUpScreen';
 import SignInScreen from '../screens/signin/SignInScreen';
-import ProfileScreen from '../screens/profile/ProfileScreen';
+import ProfileScreen from '../screens/profile/main/ProfileScreen';
+import EditNicknameScreen from '../screens/profile/EditNicknameScreen';
 
 const Stack = createStackNavigator();
 
@@ -36,6 +37,14 @@ export default function StackNavigator() {
                 component={ProfileScreen}
                 options={{
                     title: '프로필',
+                    headerTitleAlign: 'center',
+                }}
+            />
+            <Stack.Screen
+                name="EditNicknameScreen"
+                component={EditNicknameScreen}
+                options={{
+                    title: '닉네임',
                     headerTitleAlign: 'center',
                 }}
             />
