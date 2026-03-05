@@ -7,7 +7,7 @@ import { appIcon, appText } from '../../../assets';
 import Checkbox from 'expo-checkbox';
 import { storage, StorageKeys } from '../../utils/storage';
 import useAuth from '../../auth/useAuth';
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface SignInScreenProps {
   navigation: any;
@@ -68,142 +68,150 @@ const SignInScreen = ({ navigation }: SignInScreenProps) => {
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        backgroundColor: colors.background,
-        justifyContent: 'center',
-        padding: 12,
-      }}
-      keyboardShouldPersistTaps="handled"
-    >
-      <View
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }} edges={['bottom']}>
+      <ScrollView
         style={{
-          backgroundColor: '#fff',
-          borderRadius: 18,
-          padding: 22,
-          marginBottom: 24,
-          shadowColor: '#000',
-          shadowOpacity: 0.05,
-          shadowRadius: 8,
-          shadowOffset: { width: 0, height: 2 },
-          elevation: 2,
+          flex: 1,
+          backgroundColor: colors.background,
+          padding: 12,
         }}
       >
         <View
           style={{
-            alignItems: 'center',
+            backgroundColor: '#fff',
+            borderRadius: 18,
+            padding: 22,
+            marginBottom: 24,
+            shadowColor: '#000',
+            shadowOpacity: 0.05,
+            shadowRadius: 8,
+            shadowOffset: { width: 0, height: 2 },
+            elevation: 2,
           }}
         >
-          <Image
-            source={appIcon}
+          <View
             style={{
-              width: 60,
-              height: 60,
-              resizeMode: 'contain',
+              alignItems: 'center',
             }}
+          >
+            <Image
+              source={appIcon}
+              style={{
+                width: 60,
+                height: 60,
+                resizeMode: 'contain',
+              }}
+            />
+            <Image
+              source={appText}
+              style={{
+                width: 100,
+                height: 32,
+                resizeMode: 'contain',
+              }}
+            />
+          </View>
+          <Input
+            inputType="plaintext"
+            id="email"
+            label=""
+            placeholder="아이디"
+            value={id}
+            onChange={setId}
           />
-          <Image
-            source={appText}
+          <Input
+            inputType="password"
+            id="password"
+            label=""
+            placeholder="비밀번호"
+            value={password}
+            onChange={setPassword}
+            show={showPassword}
+            setShow={setShowPassword}
+          />
+          <View
             style={{
-              width: 100,
-              height: 32,
-              resizeMode: 'contain',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginTop: 8,
             }}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Checkbox
+                value={rememberId}
+                onValueChange={setRememberId}
+                color={colors.primary}
+                style={{ marginRight: 8 }}
+              />
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: '500',
+                  color: '#4b5563',
+                }}
+              >
+                아이디 기억하기
+              </Text>
+            </View>
+          </View>
+          <RoundedButton
+            style={{
+              marginTop: 52,
+            }}
+            buttonText='로그인'
+            loading={isLoading}
+            onPress={handleLogin}
           />
         </View>
-        <Input
-          inputType="plaintext"
-          id="email"
-          label=""
-          placeholder="아이디"
-          value={id}
-          onChange={setId}
-        />
-        <Input
-          inputType="password"
-          id="password"
-          label=""
-          placeholder="비밀번호"
-          value={password}
-          onChange={setPassword}
-          show={showPassword}
-          setShow={setShowPassword}
-        />
+
+
+
+
+
+
+
+
+
+
+
+
+
+        {/* 하단 영역 */}
         <View
           style={{
             flexDirection: 'row',
+            justifyContent: 'center',
             alignItems: 'center',
-            justifyContent: 'space-between',
-            marginTop: 8,
+            marginVertical: 24,
           }}
-        >
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Checkbox
-              value={rememberId}
-              onValueChange={setRememberId}
-              color={colors.primary}
-              style={{ marginRight: 8 }}
-            />
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: '500',
-                color: '#4b5563',
-              }}
-            >
-              아이디 기억하기
-            </Text>
-          </View>
-        </View>
-        <RoundedButton
-          style={{
-            marginTop: 18,
-          }}
-          buttonText='로그인'
-          loading={isLoading}
-          onPress={handleLogin}
-        />
-      </View>
-
-
-
-
-
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginVertical: 24,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 14,
-            color: '#4b5563',
-            marginRight: 8,
-          }}
-        >
-          계정이 없으신가요?
-        </Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('SignUp')}
         >
           <Text
             style={{
               fontSize: 14,
-              fontWeight: '700',
-              color: colors.primary,
+              color: '#4b5563',
+              marginRight: 8,
             }}
           >
-            회원가입
+            계정이 없으신가요?
           </Text>
-        </TouchableOpacity>
-      </View>
-
-
-
-    </ScrollView>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('SignUp')}
+          >
+            <Text
+              style={{
+                fontSize: 14,
+                fontWeight: '700',
+                color: colors.primary,
+              }}
+            >
+              회원가입
+            </Text>
+          </TouchableOpacity>
+        </View>
+        
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

@@ -40,7 +40,9 @@ const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
             label="이메일"
             value={user?.email ?? ''}
             showVerifiedIcon={user?.emailVerified}
-            onPress={() => { }}
+            onPress={() => {
+              navigation.navigate('EditEmailScreen');
+            }}
           />
 
           <ProfileItemTab

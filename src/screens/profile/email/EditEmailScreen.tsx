@@ -5,18 +5,16 @@ import useAuth from '../../../auth/useAuth';
 import RectangleButton from '../../../components/buttons/RectangleButton';
 import LabeledCounterInput from '../../../components/inputs/LabeledCounterInput';
 
-const MAX_LENGTH = 20;
-
-const EditNicknameScreen = () => {
+const EditEmailScreen = () => {
     const { user } = useAuth();
-    const [name, setName] = useState(user?.displayName ?? '');
+    const [email, setEmail] = useState(user?.email ?? '');
 
     const handleSave = () => {
-        console.log('저장된 이름:', name);
+        console.log('저장된 이메일:', email);
     };
 
-    // 버튼 활성화 조건: 이름이 1글자 이상일 때
-    const isButtonEnabled = name.trim().length > 0;
+    // 버튼 활성화 조건: 이메일이 1글자 이상일 때
+    const isButtonEnabled = email.trim().length > 0;
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }} edges={['bottom']}>
@@ -24,15 +22,19 @@ const EditNicknameScreen = () => {
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
                 behavior="padding"
-                keyboardVerticalOffset={Platform.OS === 'android' ? 90 : 88} // 헤더 높이에 맞게 조정
+                keyboardVerticalOffset={Platform.OS === 'android' ? 90 : 88}
             >
                 <LabeledCounterInput
-                    label="닉네임"
-                    value={name}
-                    onChangeText={setName}
-                    maxLength={MAX_LENGTH}
-                    placeholder="닉네임을 입력해 주세요"
-                    style={{ paddingHorizontal: 20, paddingTop: 24 }}
+                    label="이메일"
+                    placeholder="이메일을 입력해 주세요"
+                    value={email}
+                    style={{
+                        paddingHorizontal: 20,
+                        paddingTop: 24,
+                    }}
+                    onChangeText={(inputEmail) => {
+                        setEmail(inputEmail);
+                    }}
                 />
 
                 <RectangleButton
@@ -47,4 +49,4 @@ const EditNicknameScreen = () => {
     );
 };
 
-export default EditNicknameScreen;
+export default EditEmailScreen;

@@ -5,6 +5,7 @@ import SignUpScreen from '../screens/signup/SignUpScreen';
 import SignInScreen from '../screens/signin/SignInScreen';
 import ProfileScreen from '../screens/profile/main/ProfileScreen';
 import EditNicknameScreen from '../screens/profile/nicname/EditNicknameScreen';
+import EditEmailScreen from '../screens/profile/email/EditEmailScreen';
 
 const Stack = createStackNavigator();
 
@@ -45,6 +46,14 @@ export default function StackNavigator() {
                 component={EditNicknameScreen}
                 options={{
                     title: '닉네임',
+                    headerTitleAlign: 'center',
+                }}
+            />
+            <Stack.Screen
+                name="EditEmailScreen"
+                component={EditEmailScreen}
+                options={{
+                    title: '이메일',
                     headerTitleAlign: 'center',
                 }}
             />
