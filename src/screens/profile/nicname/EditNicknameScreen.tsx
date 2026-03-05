@@ -32,7 +32,7 @@ const EditNicknameScreen = () => {
                     onChangeText={setName}
                     maxLength={MAX_LENGTH}
                     placeholder="닉네임을 입력해 주세요"
-                    style={{ paddingHorizontal: 20, paddingTop: 24 }}
+                    style={{ paddingHorizontal: 20, paddingTop: 24, flex: 1 }}
                 />
 
                 <RectangleButton

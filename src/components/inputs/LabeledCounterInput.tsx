@@ -7,8 +7,8 @@ interface LabeledCounterInputProps {
     onChangeText: (text: string) => void;
     maxLength?: number | null;
     placeholder?: string;
-        autoFocus?: boolean;
-        style?: object;
+    autoFocus?: boolean;
+    style?: object;
 }
 
 function LabeledCounterInput({
@@ -17,15 +17,12 @@ function LabeledCounterInput({
     onChangeText,
     maxLength = null,
     placeholder,
-        autoFocus,
-        style
+    autoFocus,
+    style
 }: LabeledCounterInputProps) {
     return (
         <View
-            style={{
-                flex: 1,
-                ...style
-            }}
+            style={{ ...style }}
         >
             <View
                 style={{
@@ -44,30 +41,30 @@ function LabeledCounterInput({
                     </Text>
                 )}
             </View>
-                <TextInput
-                    value={value}
-                    onChangeText={(text) => {
-                        if (maxLength != null) {
-                            if (text.length <= maxLength) {
-                                onChangeText(text);
-                            }
-                        } else {
+            <TextInput
+                value={value}
+                onChangeText={(text) => {
+                    if (maxLength != null) {
+                        if (text.length <= maxLength) {
                             onChangeText(text);
                         }
-                    }}
-                    {...(maxLength != null ? { maxLength } : {})} // maxLength가 null이 아닐 때만 TextInput에 maxLength 속성을 동적으로 추가
-                    style={{
-                        fontSize: 18,
-                        fontWeight: '700',
-                        color: '#111111',
-                        paddingVertical: 8,
-                        borderBottomWidth: 1,
-                        borderBottomColor: '#e0e0e0',
-                    }}
-                    placeholder={placeholder}
-                    placeholderTextColor={"#cccccc"}
-                    autoFocus={autoFocus}
-                />
+                    } else {
+                        onChangeText(text);
+                    }
+                }}
+                {...(maxLength != null ? { maxLength } : {})} // maxLength가 null이 아닐 때만 TextInput에 maxLength 속성을 동적으로 추가
+                style={{
+                    fontSize: 18,
+                    fontWeight: '700',
+                    color: '#111111',
+                    paddingVertical: 8,
+                    borderBottomWidth: 1,
+                    borderBottomColor: '#e0e0e0',
+                }}
+                placeholder={placeholder}
+                placeholderTextColor={"#cccccc"}
+                autoFocus={autoFocus}
+            />
         </View>
     );
 }
