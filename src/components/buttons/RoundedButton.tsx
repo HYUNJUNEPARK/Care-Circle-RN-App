@@ -10,7 +10,6 @@ interface RoundedButtonProps {
   buttonText?: string;
   loadingText?: string;
   style?: ViewStyle;
-  textStyle?: TextStyle;
   onPress?: (event: GestureResponderEvent) => void;
 }
 
@@ -20,7 +19,6 @@ const RoundedButton = ({
   buttonText,
   loadingText,
   style,
-  textStyle,
   onPress,
 }: RoundedButtonProps) => {
   const isDisabled = loading || !enabled;
@@ -56,7 +54,6 @@ const RoundedButton = ({
               color: '#fff',
               fontSize: 16,
               marginLeft: 8,
-              ...(textStyle || {}),
             }}>{loadingText}</Text>
           ) : null}
         </View>
@@ -65,7 +62,6 @@ const RoundedButton = ({
           color: '#fff',
           fontSize: 16,
           fontWeight: '600',
-          ...(textStyle || {}),
         }}>{buttonText}</Text>
       )}
     </TouchableOpacity>

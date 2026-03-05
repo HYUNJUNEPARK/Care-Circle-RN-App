@@ -57,10 +57,11 @@ export async function getLoginUserInfo(): Promise<UserInfo> {
  * @param nickname 새로운 닉네임
  * @returns 서버 응답 데이터
  */
-export async function updateNickname(nickname: string) {
+export async function updateNickname(nickname: string): Promise<boolean> {
     const res = await privateAxios.patch(
         `${userApiUrl}/nickname`,
         { nickname }
     );
-    return res.data;
+
+    return res.data.success;
 }

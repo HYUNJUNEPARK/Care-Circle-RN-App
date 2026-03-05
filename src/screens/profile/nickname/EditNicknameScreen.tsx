@@ -5,15 +5,22 @@ import useAuth from '../../../auth/useAuth';
 import RectangleButton from '../../../components/buttons/RectangleButton';
 import LabeledCounterInput from '../../../components/inputs/LabeledCounterInput';
 import useUpdateNickname from './useUpdateNickname';
+import handleError from '../../../error/handleError';
 
 const EditNicknameScreen = () => {
     const { user } = useAuth();
-    const [name, setName] = useState(user?.displayName ?? '');
-    const { update, loading, error } = useUpdateNickname();
-    const isButtonEnabled = name.trim().length > 0; // 버튼 활성화 조건: 이름이 1글자 이상일 때
+    const [nickname, setNickname] = useState(user?.displayName ?? '');
+    const { updateNickname, loading, error } = useUpdateNickname();
+    const isButtonEnabled = nickname.trim().length > 0; // 버튼 활성화 조건: 이름이 1글자 이상일 때
 
-    const handleUpdateNickname = () => {
-        update(name);
+    const handleUpdateNickname = async () => {
+        const isSuccess = await updateNickname(nickname);
+
+        if (isSuccess) {
+            // 성공적으로 닉네임이 변경된 경우, 이전 화면으로 돌아가기
+            // navigation.goBack(); // navigation이 필요한 경우 주석 해제
+        }
+
     };
 
     return (
@@ -28,19 +35,20 @@ const EditNicknameScreen = () => {
                     style={{ paddingHorizontal: 20, paddingTop: 24, flex: 1 }}>
                     <LabeledCounterInput
                         label="닉네임"
-                        value={name}
-                        onChangeText={setName}
+                        value={nickname}
+                        onChangeText={setNickname}
                         maxLength={20}
                         placeholder="닉네임을 입력해 주세요"
 
                     />
                     <Text style={{ color: 'red', marginTop: 16 }}>
-                        {error}
+                        {handleError(error)}
                     </Text>
                 </View>
 
                 <RectangleButton
                     title="등록"
+                    loading={loading}
                     enabled={isButtonEnabled}
                     onPress={() => {
                         handleUpdateNickname();

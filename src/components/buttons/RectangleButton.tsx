@@ -1,4 +1,5 @@
-import { TouchableOpacity, Text, ViewStyle } from 'react-native';
+import { TouchableOpacity, Text, View, ViewStyle, TextStyle } from 'react-native';
+import CircleSpinner from '../loadings/spinner/CircleSpinner';
 import colors from '../../styles/colors';
 
 interface RectangleButtonProps {
@@ -6,33 +7,57 @@ interface RectangleButtonProps {
     onPress?: () => void;
     enabled?: boolean;
     style?: ViewStyle;
+    loading?: boolean;
+    loadingText?: string;
 }
 
 function RectangleButton({
     title,
     onPress,
     enabled = true,
-    style
+    style,
+    loading = false,
+    loadingText,
 }: RectangleButtonProps) {
+    const isDisabled = loading || !enabled;
     return (
         <TouchableOpacity
-            onPress={enabled ? onPress : undefined}
+            onPress={isDisabled ? undefined : onPress}
             style={{
                 paddingVertical: 18,
                 alignItems: 'center',
                 justifyContent: 'center',
                 backgroundColor: enabled ? colors.primary : '#e8e8e8',
+                opacity: isDisabled ? 0.6 : 1,
                 ...(style || {}),
             }}
-            disabled={!enabled}
+            disabled={isDisabled}
         >
-            <Text style={{
-                fontSize: 16,
-                color: enabled ? '#ffffff' : '#555555',
-                fontWeight: '600'
-            }}>
-                {title}
-            </Text>
+            {loading ? (
+                <View style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 12,
+                }}>
+                    <CircleSpinner />
+                    {loadingText ? (
+                        <Text style={{
+                            color: '#fff',
+                            fontSize: 16,
+                            marginLeft: 8,
+                        }}>{loadingText}</Text>
+                    ) : null}
+                </View>
+            ) : (
+                <Text style={{
+                    fontSize: 16,
+                    color: enabled ? '#ffffff' : '#555555',
+                    fontWeight: '600',
+                }}>
+                    {title}
+                </Text>
+            )}
         </TouchableOpacity>
     );
 }

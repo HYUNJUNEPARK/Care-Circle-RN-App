@@ -1,28 +1,27 @@
 import { useState } from 'react';
-import { updateNickname } from '../../../network/apis/userApis';
+import { updateNickname as updateNicknameApi } from '../../../network/apis/userApis';
 
 /**
  * 닉네임 변경 훅
  */
 export default function useUpdateNickname() {
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-    //const [success, setSuccess] = useState(false);
+    const [error, setError] = useState<Error | null>(null);
 
-    const update = async (nickname: string) => {
+    const updateNickname = async (nickname: string) => {
         setLoading(true);
         setError(null);
-        //setSuccess(false);
         try {
-            await updateNickname(nickname);
-            //setSuccess(true);
-        } catch (err: any) {
-            console.error('닉네임 변경 실패:', err);
-            setError(err?.response?.data?.message || err.message || '닉네임 변경 실패');
+            const success = await updateNicknameApi(nickname);
+            return success;
+        } catch (error) {
+            console.error('닉네임 변경 실패:', error);
+            setError(error as Error);
+            return false;
         } finally {
             setLoading(false);
         }
     };
 
-    return { update, loading, error };
+    return { updateNickname, loading, error };
 }
