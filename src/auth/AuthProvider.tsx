@@ -56,8 +56,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const reloadCureentUser = useCallback(async () => {
         if (auth.currentUser) {
+            console.info('called AuthProvider - reloadCurrentUser');
             await auth.currentUser.reload();
-            setUser(auth.currentUser);
+            setUser({ ...auth.currentUser });
         }
     }, []);
 

@@ -41,7 +41,7 @@ function ProfileItemTab({
                 </View>
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 6 }}>
-                <Text style={{ fontSize: 18, color: '#6d6d6d', fontWeight: '500', flex: 1 }}>{value}</Text>
+                <Text style={{ fontSize: 18, color: '#4f4f4f', fontWeight: '500', flex: 1 }}>{value}</Text>
                 {showArrow && <MaterialIcons name="chevron-right" size={18} color="#bbb" />}
             </View>
 

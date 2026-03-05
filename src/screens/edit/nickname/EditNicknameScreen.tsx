@@ -12,7 +12,7 @@ const EditNicknameScreen = () => {
     const { user, reloadCureentUser } = useAuth();
     const [nickname, setNickname] = useState(user?.displayName ?? '');
     const { updateNickname, loading, error } = useUpdateNickname();
-    const isButtonEnabled = nickname.trim().length > 0; // 버튼 활성화 조건: 이름이 1글자 이상일 때
+    const isButtonEnabled = nickname.trim().length > 0 && nickname !== user?.displayName; // 버튼 활성화 조건: 이름이 1글자 이상이고 기존 닉네임과 다를 때
 
     const handleUpdateNickname = async () => {
         const isSuccess = await updateNickname(nickname);
@@ -24,7 +24,10 @@ const EditNicknameScreen = () => {
     };
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }} edges={['bottom']}>
+        <SafeAreaView
+            style={{ flex: 1, backgroundColor: '#ffffff' }}
+            edges={['bottom']}
+        >
             {/* 하단 저장 버튼이 키보드 위로 올라옴 */}
             <KeyboardAvoidingView
                 style={{ flex: 1 }}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
 import ProfileItemTab from './components/ProfileItemTab';
 import PlainTab from './components/PlainTab';
@@ -18,6 +18,7 @@ interface ProfileScreenProps {
 const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
   const { user, logOut } = useAuth();
   const { showAlert } = useTextModal();
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }} edges={['bottom']}>
       <ScrollView
