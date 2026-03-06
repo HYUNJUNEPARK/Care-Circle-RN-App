@@ -3,11 +3,8 @@ import { View, Text } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { useRoute } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { PRIVACY_URL, TERMS_URL } from '../../consts/url';
 
-export enum WebviewViewerTitleType {
-    Privacy = 'Privacy',
-    Terms = 'Terms',
-}
 
 interface WebviewViewerProps {
     navigation: any;
@@ -16,22 +13,22 @@ interface WebviewViewerProps {
 const WebviewViewer = ({ navigation }: WebviewViewerProps) => {
     const route = useRoute();
     // @ts-ignore
-    const { uri, type } = route.params || {};
+    const { uri } = route.params || {};
 
     useEffect(() => {
         let title = '';
-        switch (type) {
-            case WebviewViewerTitleType.Privacy:
+        switch (uri) {
+            case PRIVACY_URL:
                 title = '개인 정보 처리 방침';
                 break;
-            case WebviewViewerTitleType.Terms:
+            case TERMS_URL:
                 title = '이용 약관';
                 break;
             default:
                 title = '';
         }
         navigation.setOptions({ title });
-    }, [navigation, type]);
+    }, [navigation, uri]);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>

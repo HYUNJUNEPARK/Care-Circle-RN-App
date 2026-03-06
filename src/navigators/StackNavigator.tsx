@@ -8,6 +8,8 @@ import EditNicknameScreen from '../screens/edit/nickname/EditNicknameScreen';
 import EditEmailScreen from '../screens/edit/email/EditEmailScreen';
 import WebviewViewer from '../screens/viewer/WebviewViewer';
 
+import AnnouncementScreen from '../screens/announcement/AnnouncementScreen';
+
 const Stack = createStackNavigator();
 
 export default function StackNavigator() {
@@ -17,6 +19,14 @@ export default function StackNavigator() {
                 name="Main"
                 component={TabNavigator}
                 options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="Announcement"
+                component={AnnouncementScreen}
+                options={{
+                    title: '공지사항',
+                    headerTitleAlign: 'center',
+                }}
             />
             <Stack.Screen
                 name="SignUp"
